@@ -115,6 +115,7 @@
     <ClInclude Include="ETradeClient\browser\url_request.h" />
     <ClInclude Include="ETradeClient\browser\user_msg_monitor.h" />
     <ClInclude Include="ETradeClient\browser\popup_browser_handler.h" />
+    <ClInclude Include="ETradeClient\hardware\bank_card_reader.h" />
     <ClInclude Include="ETradeClient\hardware\dili_card_device.h" />
     <ClInclude Include="ETradeClient\hardware\hardware_cmd.h" />
     <ClInclude Include="ETradeClient\hardware\id_card_reader.h" />
@@ -152,6 +153,7 @@
     <ClCompile Include="ETradeClient\browser\url_request_client.cpp" />
     <ClCompile Include="ETradeClient\browser\user_msg_monitor.cpp" />
     <ClCompile Include="ETradeClient\browser\popup_browser_handler.cpp" />
+    <ClCompile Include="ETradeClient\hardware\bank_card_reader.cpp" />
     <ClCompile Include="ETradeClient\hardware\dili_card_device.cpp" />
     <ClCompile Include="ETradeClient\hardware\hardware_cmd.cpp" />
     <ClCompile Include="ETradeClient\hardware\id_card_reader.cpp" />

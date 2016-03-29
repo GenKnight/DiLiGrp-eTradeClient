@@ -162,6 +162,9 @@
     <ClInclude Include="ETradeClient\utility\menu_res_auth_mgr.h">
       <Filter>Header Files\utility</Filter>
     </ClInclude>
+    <ClInclude Include="ETradeClient\hardware\bank_card_reader.h">
+      <Filter>Header Files\hardware</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -256,6 +259,9 @@
     </ClCompile>
     <ClCompile Include="ETradeClient\utility\menu_res_auth_mgr.cpp">
       <Filter>Source Files\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\hardware\bank_card_reader.cpp">
+      <Filter>Source Files\hardware</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

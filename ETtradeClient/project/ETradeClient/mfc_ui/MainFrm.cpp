@@ -99,15 +99,6 @@ namespace
 		{ 1, USER_ACCOUNT, TBSTATE_ENABLED, BTNS_AUTOSIZE | BTNS_BUTTON | BTNS_WHOLEDROPDOWN, 0, 0 }
 	};
 
-	static std::vector<std::wstring> kQuickAccessText = // TODO read from menu.
-	{
-		_T("办理主卡"),
-		_T("办理副卡"),
-		_T("办理临时卡"),
-		_T("充值"),
-		_T("提现"),
-		_T("结账申请")
-	};
 	static std::vector<std::wstring> kQuickAccessIcon =
 	{
 		_T("issue_master_card.ico"),
@@ -509,6 +500,9 @@ bool CMainFrame::FilterMenuBar()
 			HICON hicon = (HICON)LoadImage(AfxGetResourceHandle(),
 				file_path.c_str(), IMAGE_ICON, MENU_ICON_WIDTH, MENU_ICON_HEIGHT, LR_DEFAULTCOLOR | LR_LOADFROMFILE);
 			m_authorized_menu_icons.emplace(std::make_pair(criter->first, hicon));
+			
+			// 使用从服务器获取的菜单标题来更新菜单标题
+			menu->ModifyMenu(criter->first, MF_BYCOMMAND, criter->first, criter->second.remark.c_str());
 		}
 	}
 	main_wnd->DrawMenuBar();
@@ -678,9 +672,10 @@ bool CMainFrame::CreateQuickAccessToolBar()
 	tbc.SetDisabledImageList(&m_quick_access_tlb_disabled_imgs);
 
 	int index = 0;
+	const auto& res_auth_map = m_menu_res_auth_manager.MenuItems();
 	for (auto& btn : kQuickAccessBtn)
 	{
-		m_quick_access_tlb.SetButtonText(index, kQuickAccessText[btn.iBitmap].c_str());
+		m_quick_access_tlb.SetButtonText(index, res_auth_map.at(btn.idCommand).remark.c_str());
 		index++;
 	}
 	UpdateToolbarBtnSize(m_quick_access_tlb); // Make sure to set toolbar button size after the button text has been set.

@@ -84,7 +84,7 @@ std::string PINPad::GetVersion() const
 
 bool PINPad::DoConnect() const
 {
-	const int16_t kCOMPortMin = 0, kCOMPortMax = 19, kUSBPort = 100; // Connect via COM.
+	const int16_t kCOMPortMin = 0, kCOMPortMax = 19, kUSBPort = 100;
 	const uint32_t kBaudRate = 19200;
 	do
 	{

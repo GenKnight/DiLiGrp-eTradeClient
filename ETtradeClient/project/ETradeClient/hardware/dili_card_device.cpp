@@ -17,7 +17,7 @@ std::string DecToHex(T d, bool show_base = false)
 	std::stringstream ss;
 	if (show_base)
 		ss << "0x";
-	ss << std::setfill('0') << std::setw(sizeof(T) * 2) << std::hex << d;
+	ss << std::setfill('0') << std::setw(sizeof(T) * 2) << std::hex << static_cast<int>(d);
 	return ss.str();
 }
 

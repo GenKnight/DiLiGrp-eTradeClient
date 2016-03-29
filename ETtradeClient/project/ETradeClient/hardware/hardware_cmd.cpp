@@ -14,6 +14,7 @@
 #include "etradeclient/hardware/pin_pad.h"
 #include "etradeclient/hardware/id_card_reader.h"
 #include "etradeclient/hardware/dili_card_device.h"
+#include "etradeclient/hardware/bank_card_reader.h"
 #include "etradeclient/hardware/password_machine.h"
 
 namespace StatusCode
@@ -69,6 +70,12 @@ namespace
 	{
 		static PWDMachine pwd_machine;
 		return pwd_machine;
+	}
+
+	const BankCardReader& BankCardReader_()
+	{
+		static BankCardReader bank_card_reader;
+		return bank_card_reader;
 	}
 }
 
@@ -496,5 +503,38 @@ ReadPINPadCmd::Reply WriteDILICardServiceInfoCmd::Execute(const std::string& inp
 	if (boost::iequals(reply.error_code, StatusCode::OK))
 		LOG_TRACE(L"写入卡片业务信息成功。");
 	reply.data.put("", "");
+	return reply;
+}
+
+ReadPINPadCmd::Reply ReadBankCardNumCmd::Execute(const std::string& input)
+{
+	LOG_TRACE(L"读取银行卡号。");
+	auto& bank_card_reader = BankCardReader_();
+	std::string bank_card_no("");
+	Reply reply;
+	do
+	{
+		try
+		{
+			if (!bank_card_reader.Connect())
+			{
+				LOG_ERROR(L"连接银行卡读卡器失败。");
+				reply.error_code = StatusCode::CPU_CARD_DEVICE_CONNECT_FAILED;
+				break;
+			}
+			bank_card_no = bank_card_reader.ReadBankCardNum();
+		}
+		catch (std::exception& ex)
+		{
+			LOG_FATAL(L"读取银行卡号失败，错误信息： " + str_2_wstr(ex.what()));
+			reply.error_code = StatusCode::BANK_CARD_READ_CARD_NUM_FAILED;
+			break;
+		}
+	} while (0);
+	bank_card_reader.Disconnect();
+	if (boost::iequals(reply.error_code, StatusCode::OK))
+		LOG_TRACE(L"读取银行卡号成功。");
+
+	reply.data.put("chipNo", bank_card_no);
 	return reply;
 }

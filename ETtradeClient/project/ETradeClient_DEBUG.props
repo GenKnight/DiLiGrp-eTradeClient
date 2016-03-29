@@ -7,11 +7,11 @@
     <IntDir>$(SolutionDir)\obj\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)-d</TargetName>
     <IncludePath>$(BOOST);$(CEF_PATH);$(ProjectDir);$(IncludePath)</IncludePath>
-    <LibraryPath>$(BOOST)\stage\lib\$(Platform);$(CEF_PATH)\$(Configuration);$(CEF_PATH)\out\$(Configuration)\lib;$(ProjectDir)\ExLib\hardware\pin_pad;$(ProjectDir)\ExLib\hardware\pwd_machine;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(BOOST)\stage\lib\$(Platform);$(CEF_PATH)\$(Configuration);$(CEF_PATH)\out\$(Configuration)\lib;$(ProjectDir)\ExLib\hardware\pin_pad;$(ProjectDir)\ExLib\hardware\pwd_machine;$(ProjectDir)\ExLib\hardware\bank_card_reader;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>
-      <AdditionalDependencies>Winhttp.lib;crypt32.lib;dcp3.lib;union_syj1001_api.lib</AdditionalDependencies>
+      <AdditionalDependencies>Winhttp.lib;crypt32.lib;dcp3.lib;union_syj1001_api.lib;dcrf32.lib</AdditionalDependencies>
       <EnableUAC>false</EnableUAC>
       <UACExecutionLevel>AsInvoker</UACExecutionLevel>
     </Link>
@@ -20,6 +20,7 @@
 xcopy /y /e /i $(CEF_PATH)Resources\*.dat $(OutputPath)
 xcopy /y $(CEF_PATH)\Release\*.dll $(OutputPath)
 xcopy /y $(CEF_PATH)\Release\*.bin $(OutputPath)
+xcopy /y $(ProjectDir)\ExLib\hardware\bank_card_reader\*.dll $(OutputPath)
 xcopy /y $(ProjectDir)\ExLib\hardware\dili_card_device\*.dll $(OutputPath)
 xcopy /y $(ProjectDir)\ExLib\hardware\id_card_reader\*.dll $(OutputPath)
 xcopy /y $(ProjectDir)\ExLib\hardware\pin_pad\*.dll $(OutputPath)

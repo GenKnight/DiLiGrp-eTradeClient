@@ -66,4 +66,9 @@ public:
 	virtual Reply Execute(const std::string& input) override;
 };
 
+class ReadBankCardNumCmd : public HardwareCmd
+{
+public:
+	virtual Reply Execute(const std::string& input) override;
+};
 #endif // ETRADECLIENT_HARDWARE_HARDWARE_CMD_H_INCLUDED

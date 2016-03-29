@@ -45,6 +45,7 @@ namespace HW
 	static const std::string JSON_VAL_FILEID_DILI_CARD_SERVICE_INFO = "02"; // Service info.
 	static const std::string JSON_VAL_FILEID_ID_CARD = "10";
 	static const std::string JSON_VAL_FILEID_PIN_PAD = "11";
+	static const std::string JSON_VAL_FILEID_BANK_CARD_NUM = "20";
 
 	struct HWRequest
 	{
@@ -97,7 +98,7 @@ namespace HW
 			m_hw_cmd_map.insert(JSON_VAL_CMD_READ + JSON_VAL_FILEID_DILI_CARD_BASIC_INFO, new ReadDILICardBasicInfoCmd());
 			m_hw_cmd_map.insert(JSON_VAL_CMD_READ + JSON_VAL_FILEID_DILI_CARD_SERVICE_INFO, new ReadDILICardServiceInfoCmd());
 			m_hw_cmd_map.insert(JSON_VAL_CMD_WRITE + JSON_VAL_FILEID_DILI_CARD_SERVICE_INFO, new WriteDILICardServiceInfoCmd());
-			
+			m_hw_cmd_map.insert(JSON_VAL_CMD_READ + JSON_VAL_FILEID_BANK_CARD_NUM, new ReadBankCardNumCmd());
 		}
 		std::string HandleRequest(const std::string& request_json)
 		{

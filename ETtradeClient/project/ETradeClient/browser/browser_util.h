@@ -1,0 +1,34 @@
+#ifndef ETRADECLIENT_BROWSER_BROWSER_UTIL_H_INCLUDED
+#define ETRADECLIENT_BROWSER_BROWSER_UTIL_H_INCLUDED
+
+#include <windows.h>
+
+#define CEF_MENU_ID_OPEN_LINK		(MENU_ID_USER_FIRST + 100)
+#define CEF_MENU_ID_OPEN_LINK_TAB	(MENU_ID_USER_FIRST + 101)
+#define CEF_MENU_ID_OPEN_LINK_NEW	(MENU_ID_USER_FIRST + 102)
+
+#define CEF_BIT_IS_LOADING			0x001
+#define CEF_BIT_CAN_GO_BACK			0x002
+#define CEF_BIT_CAN_GO_FORWARD		0x004
+
+struct CEFAuthenticationValues
+{
+	LPCTSTR lpszHost;
+	LPCTSTR lpszRealm;
+	TCHAR szUserName[1024];
+	TCHAR szUserPass[1024];
+};
+
+struct CEFDownloadItemValues
+{
+	BOOL bIsValid;
+	BOOL bIsInProgress;
+	BOOL bIsComplete;
+	BOOL bIsCanceled;
+	INT nProgress;
+	LONGLONG nSpeed;
+	LONGLONG nReceived;
+	LONGLONG nTotal;
+};
+
+#endif  // ETRADECLIENT_BROWSER_BROWSER_UTIL_H_INCLUDED

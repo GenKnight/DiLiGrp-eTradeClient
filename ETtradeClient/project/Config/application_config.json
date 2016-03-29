@@ -1,0 +1,10 @@
+{
+	"msg_count_query_interval": 100,
+	"pwd_machine_ip": "10.28.6.200",
+	"pwd_machine_port": 8,
+	"pwd_machine_timeout": 10000,
+	"pin_pad_pwd_len": 6,
+	"pin_pad_timeout": 2,
+	"client_cert_store": "MY",
+	"client_cert_subject": "*.diligrp.com"
+}

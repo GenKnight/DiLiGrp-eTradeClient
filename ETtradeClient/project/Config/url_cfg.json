@@ -1,0 +1,12 @@
+{
+	"protocol": "https",
+	"host": "icard.diligrp.com",
+	"port": 0,
+	"main_path": "/user/initMain.page",
+	"login_path": "/counter/authorizeCounter.auth",
+	"logout_path": "/user/doLogout.auth",
+	"menu_auth_path":"/counter/loadPermission.do", 
+	"user_msg_count_path":"/message/countUserMessage.do", 
+	"user_msg_path":"/message/userMessageInit.page",
+	"modify_pwd_path":"/employee/client/initModifyPassword.page"
+}

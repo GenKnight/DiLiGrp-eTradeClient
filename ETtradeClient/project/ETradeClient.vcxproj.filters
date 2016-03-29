@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\browser">
+      <UniqueIdentifier>{36bb4a05-ea16-45e1-a6b3-b99f136a8a30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\mfc_ui">
+      <UniqueIdentifier>{7fbfc12d-5c7f-4d9e-8533-c36400b87aa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\browser">
+      <UniqueIdentifier>{4fcca518-c66e-48a7-a146-efc3a5ba524e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\mfc_ui">
+      <UniqueIdentifier>{2c62262f-4a56-47a0-976c-450d587d1064}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\utility">
+      <UniqueIdentifier>{b5e7a1a8-b379-41f5-8b1d-b1ac7108203e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utility">
+      <UniqueIdentifier>{a9fa2bdd-0f48-4b73-a9f5-14a99c95ce28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\hardware">
+      <UniqueIdentifier>{54634bbd-dfce-42a7-9f4a-74d0f31af686}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\hardware">
+      <UniqueIdentifier>{edd3df87-3f80-472d-b18d-ba3deb133e13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost_patch">
+      <UniqueIdentifier>{342462ce-4ade-4fa2-90bd-a50f6e14df87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\boost_patch\property_tree">
+      <UniqueIdentifier>{4715e3f3-a438-4d55-b595-355a5cdb2ceb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\browser\browser_app.h">
+      <Filter>Header Files\browser</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\browser\browser_util.h">
+      <Filter>Header Files\browser</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\browser\render_delegate.h">
+      <Filter>Header Files\browser</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\browser\user_msg_monitor.h">
+      <Filter>Header Files\browser</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\browser\popup_browser_handler.h">
+      <Filter>Header Files\browser</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\browser\async_js_callback_handler.h">
+      <Filter>Header Files\browser</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\browser\embedded_browser.h">
+      <Filter>Header Files\browser</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\browser\url_request_client.h">
+      <Filter>Header Files\browser</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\browser\url_request.h">
+      <Filter>Header Files\browser</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\browser\url_request_proxy.h">
+      <Filter>Header Files\browser</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\browser\session.h">
+      <Filter>Header Files\browser</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\browser\main_view_browser_handler.h">
+      <Filter>Header Files\browser</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\mfc_ui\ETradeClient.h">
+      <Filter>Header Files\mfc_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\mfc_ui\ETradeClientView.h">
+      <Filter>Header Files\mfc_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\mfc_ui\MainFrm.h">
+      <Filter>Header Files\mfc_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\mfc_ui\LoginEdit.h">
+      <Filter>Header Files\mfc_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\mfc_ui\PopupBrowserDlgView.h">
+      <Filter>Header Files\mfc_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\utility\string_converter.h">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\utility\logging.h">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\utility\application_config.h">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\utility\url_regex.h">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\utility\url_config.h">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\hardware\pin_pad.h">
+      <Filter>Header Files\hardware</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\hardware\id_card_reader.h">
+      <Filter>Header Files\hardware</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\utility\win_msg_define.h">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\utility\win_http.h">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\hardware\password_machine.h">
+      <Filter>Header Files\hardware</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\hardware\dili_card_device.h">
+      <Filter>Header Files\hardware</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\hardware\hardware_cmd.h">
+      <Filter>Header Files\hardware</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\boost_patch\property_tree\json_parser.hpp">
+      <Filter>Header Files\boost_patch\property_tree</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\utility\openssl_aes_cbc.h">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\boost_patch\property_tree\json_parser_write.hpp">
+      <Filter>Header Files\boost_patch\property_tree</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\mfc_ui\ConfigDialog.h">
+      <Filter>Header Files\mfc_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\mfc_ui\LoginDialog.h">
+      <Filter>Header Files\mfc_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\utility\menu_res_auth_mgr.h">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\browser\browser_app.cpp">
+      <Filter>Source Files\browser</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\browser\render_delegate.cpp">
+      <Filter>Source Files\browser</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\mfc_ui\ETradeClient.cpp">
+      <Filter>Source Files\mfc_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\mfc_ui\ETradeClientView.cpp">
+      <Filter>Source Files\mfc_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\mfc_ui\MainFrm.cpp">
+      <Filter>Source Files\mfc_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\browser\embedded_browser.cpp">
+      <Filter>Source Files\browser</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\browser\url_request.cpp">
+      <Filter>Source Files\browser</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\browser\url_request_client.cpp">
+      <Filter>Source Files\browser</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\utility\string_converter.cpp">
+      <Filter>Source Files\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\browser\url_request_proxy.cpp">
+      <Filter>Source Files\browser</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\browser\session.cpp">
+      <Filter>Source Files\browser</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\utility\logging.cpp">
+      <Filter>Source Files\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\utility\application_config.cpp">
+      <Filter>Source Files\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\browser\main_view_browser_handler.cpp">
+      <Filter>Source Files\browser</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\hardware\id_card_reader.cpp">
+      <Filter>Source Files\hardware</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\utility\url_config.cpp">
+      <Filter>Source Files\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\hardware\pin_pad.cpp">
+      <Filter>Source Files\hardware</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\browser\async_js_callback_handler.cpp">
+      <Filter>Source Files\browser</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\browser\user_msg_monitor.cpp">
+      <Filter>Source Files\browser</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\browser\popup_browser_handler.cpp">
+      <Filter>Source Files\browser</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\mfc_ui\PopupBrowserDlgView.cpp">
+      <Filter>Source Files\mfc_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\mfc_ui\LoginEdit.cpp">
+      <Filter>Source Files\mfc_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\utility\win_http.cpp">
+      <Filter>Source Files\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\utility\openssl_aes_cbc.cpp">
+      <Filter>Source Files\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\hardware\dili_card_device.cpp">
+      <Filter>Source Files\hardware</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\hardware\hardware_cmd.cpp">
+      <Filter>Source Files\hardware</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\mfc_ui\ConfigDialog.cpp">
+      <Filter>Source Files\mfc_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\mfc_ui\LoginDialog.cpp">
+      <Filter>Source Files\mfc_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\hardware\password_machine.cpp">
+      <Filter>Source Files\hardware</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\utility\menu_res_auth_mgr.cpp">
+      <Filter>Source Files\utility</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ETradeClient.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\ETradeClient.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\ETradeClient.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

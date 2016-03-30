@@ -19,6 +19,12 @@
 namespace PT = boost::property_tree;
 namespace fs = boost::filesystem;
 
+// For those menu item which are not configured by server side, we call them local menu resources,
+// and we define their "auth_id" as 0 in config file. These menu items are authorized by default("is_authorized == true").
+// For those menu items whose "auth_id" are not defined as 0 in config file,
+// their authorization needs to be configured by server side, thus they are unauthorized by default("is_authorized == false").
+static const uint32_t LOCAL_MENU_RES_AUTH_ID = 0;
+
 struct MenuAuthItem
 {
 	uint32_t				id;// Menu Auth ID, defined by server side. If not authorized by server, value is 0.
@@ -46,14 +52,13 @@ const MenuResAuthMgr::MenuItemsType& MenuResAuthMgr::MenuItems() const
 	return m_menu_items;
 }
 
+bool MenuResAuthMgr::IsLocalMenuItem(uint32_t menu_res_id) const
+{
+	return LOCAL_MENU_RES_AUTH_ID == m_menu_items.at(menu_res_id).auth_id;
+}
+
 void MenuResAuthMgr::ReadMenuResAuthCfg()
 {
-	// For those menu item which are not configured by server side, we call them local menu resources,
-	// and we define their "auth_id" as 0 in config file. These menu items are authorized by default("is_authorized == true").
-	// For those menu items whose "auth_id" are not defined as 0 in config file,
-	// their authorization needs to be configured by server side, thus they are unauthorized by default("is_authorized == false").
-	static const uint32_t LOCAL_MENU_RES_AUTH_ID = 0;
-
 	try
 	{
 		const std::string kMenuBarConfEncryptFile("./Config/menu_res_auth_cfg");
@@ -151,7 +156,7 @@ void MenuResAuthMgr::DoUpdateAuth(const std::string& auth_data)
 			{
 				return x.second.auth_id == auth_item.id;
 			});
-		if (it != m_menu_items.end()) // If authorized, update its information.
+		if (it != m_menu_items.end()) // If authorized by server, update its information.
 		{
 			it->second.is_authorized = true;
 			it->second.url_path = auth_item.url_path;

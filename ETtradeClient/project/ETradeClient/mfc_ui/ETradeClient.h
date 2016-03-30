@@ -22,6 +22,18 @@ class BrowserApp; // Forward declaration.
 
 class CETradeClientApp : public CWinApp
 {
+	// Instance manager to prevent multiple running instances.
+	class InstanceManager
+	{
+	public:
+		InstanceManager();
+		~InstanceManager();
+		bool Register(const std::wstring& app_id);
+		void Unregister();
+	private:
+		HANDLE m_mutex_handle;
+	};
+
 public:
 	CETradeClientApp();
 
@@ -39,6 +51,7 @@ private:
 private:
 	CefRefPtr<BrowserApp>	m_browser_app;
 	bool					m_cef_initialized;
+	InstanceManager			m_instance_mgr;
 };
 
 extern CETradeClientApp theApp;

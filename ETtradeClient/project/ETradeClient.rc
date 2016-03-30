@@ -90,18 +90,12 @@ BEGIN
     POPUP "业务办理(&B)",                       65535,MFT_STRING,MFS_ENABLED
     BEGIN
         MENUITEM "办理主卡",                        ID_ISSUE_MASTER_CARD,MFT_STRING | MFT_RIGHTJUSTIFY,MFS_ENABLED
-        MENUITEM "办理副卡",                        ID_ISSUE_SLAVE_CARD,MFT_STRING,MFS_ENABLED
         MENUITEM "办理临时卡",                       ID_ISSUE_ANONYMOUS_CARD,MFT_STRING,MFS_ENABLED
         MENUITEM "权限设置",                        ID_SET_CARD_AUTH,MFT_STRING,MFS_ENABLED
-        MENUITEM "卡片挂失",                        ID_REPORT_CARD_LOSS,MFT_STRING,MFS_ENABLED
-        MENUITEM "卡片解挂",                        ID_RESTORE_CARD_LOSS,MFT_STRING,MFS_ENABLED
-        MENUITEM "卡片更换",                        ID_CHANGE_CARD,MFT_STRING,MFS_ENABLED
         MENUITEM "卡片退卡",                        ID_RETURN_CARD,MFT_STRING,MFS_ENABLED
         MENUITEM "更改密码",                        ID_MODIFY_CARD_PWD,MFT_STRING,MFS_ENABLED
         MENUITEM "重置密码",                        ID_RESET_CARD_PWD,MFT_STRING,MFS_ENABLED
         MENUITEM "卡片解锁",                        ID_UNLOCK_CARD,MFT_STRING,MFS_ENABLED
-        MENUITEM "赊销白名单",                       ID_DL_ORG_WHITE_LIST,MFT_STRING,MFS_ENABLED
-        MENUITEM "银行卡管理",                       ID_MANAGE_BANK_CARD,MFT_STRING,MFS_ENABLED
     END
     POPUP "资金业务(&M)",                       65535,MFT_STRING,MFS_ENABLED
     BEGIN

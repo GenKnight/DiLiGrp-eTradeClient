@@ -122,7 +122,7 @@ BEGIN_MESSAGE_MAP(CLoginDialog, CDialogEx)
 END_MESSAGE_MAP()
 
 CLoginDialog::CLoginDialog(const std::wstring& title, CWnd* pParent)
-	: CDialogEx(CLoginDialog::IDD, pParent), m_title(title)
+	: CDialogEx(CLoginDialog::IDD, pParent), m_title(title), m_account_edit(L"用户名"), m_pwd_edit(L"密码", true)
 {}
 
 CLoginDialog::~CLoginDialog()
@@ -165,18 +165,19 @@ BOOL CLoginDialog::OnInitDialog()
 	AdjustDlgSize();
 	SetSubCtrlStyle();
 	SetSubCtrlLayout();
+
+	m_account_edit.UpdateStyle();
+	m_pwd_edit.UpdateStyle();
+
 	SetWindowText(m_title.c_str());
 	if (!Session::Instance().UserName().empty())
 	{
-		m_account_edit.SetContent(Session::Instance().UserName());
+		m_account_edit.SetText(Session::Instance().UserName().c_str());
 		m_account_edit.SetReadOnly();
 		m_pwd_edit.SetFocus();
 	}
 	else
 		m_login_btn.SetFocus();
-
-	m_account_edit.UpdateStyle();
-	m_pwd_edit.UpdateStyle();
 
 	return false;  // return TRUE unless you set the focus to a control
 }
@@ -201,9 +202,8 @@ void CLoginDialog::OnLoginBtnClicked()
 	ScreenToClient(&rect);
 	InvalidateRect(&rect); // Refresh error message text rect when next time get "WM_PAINT" event.
 
-	CString account, pwd;
-	m_account_edit.GetContent(account);
-	m_pwd_edit.GetContent(pwd);
+	CString account = m_account_edit.GetText();
+	CString pwd = m_pwd_edit.GetText();
 	if (account.IsEmpty() || pwd.IsEmpty())
 	{
 		m_login_err_msg_text.SetWindowTextW(L"用户名或密码不能为空！");

@@ -56,7 +56,7 @@ std::string BankCardReader::ReadBankCardNum() const
 {
 	FindAndResetCard(); // 读卡之前必须要先寻卡并复位卡，否则会读取失败。
 	SelectDF();
-	return ParseRecordData(ReadDFRecord());
+	return ParseDFRecord(ReadDFRecord());
 }
 
 void BankCardReader::FindAndResetCard() const // 寻卡并复位卡片
@@ -139,7 +139,7 @@ BankCardReader::RecordDataT BankCardReader::ReadDFRecord() const
 	return RecordDataT(recv_data, recv_data_len);// 赋值的时候，指明长度，避免处理过程中遇到'\0'就结束
 }
 
-std::string BankCardReader::ParseRecordData(const RecordDataT& data) const
+std::string BankCardReader::ParseDFRecord(const RecordDataT& data) const
 {
 	//数据格式：[卡号标签][卡号长度][卡号][填充字符]
 	//如：5A0A6230910299000378541f --- [5A][0A][6230910299000378541][f].
@@ -158,9 +158,9 @@ std::string BankCardReader::ParseRecordData(const RecordDataT& data) const
 		card_num.append(DecToHex(data.at(pos)));
 	
 	// 如果银行卡号是奇数位，最后一位会用“f”补齐，因此读出数据的最后一位需要排除。
-	int card_last_num_pos = card_num_length * 2 - 1;
-	const char kPaddingChar = 'f';// 卡号填充字符
 	const int kPaddingCharCount = 1;
+	int card_last_num_pos = card_num_length * 2 - kPaddingCharCount;
+	const char kPaddingChar = 'f';// 卡号填充字符
 	if (kPaddingChar == card_num.at(card_last_num_pos))
 		card_num.erase(card_last_num_pos, kPaddingCharCount);
 	return card_num;

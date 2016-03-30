@@ -45,8 +45,8 @@ private:
 	std::wstring		m_title;
 
 	CStatic				m_login_err_msg_text;
-	CAccountEdit		m_account_edit;
-	CPwdEdit			m_pwd_edit;
+	CLoginEdit			m_account_edit;
+	CLoginEdit			m_pwd_edit;
 	LoginBtn			m_login_btn;
 	CImage				m_bg_img;
 

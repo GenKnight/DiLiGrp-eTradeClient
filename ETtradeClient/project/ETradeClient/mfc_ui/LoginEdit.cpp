@@ -2,6 +2,8 @@
 
 #include "LoginEdit.h"
 
+static const wchar_t PWD_CHAR = 0x25CF; // "°Ò" 
+
 BEGIN_MESSAGE_MAP(CLoginEdit, CEdit)
 	ON_WM_NCCALCSIZE()
 	ON_WM_NCPAINT()
@@ -11,23 +13,39 @@ BEGIN_MESSAGE_MAP(CLoginEdit, CEdit)
 	ON_WM_CTLCOLOR_REFLECT()
 END_MESSAGE_MAP()
 
-CLoginEdit::CLoginEdit()
-	: m_bottom_fill_rect(0, 0, 0, 0), m_top_fill_rect(0, 0, 0, 0),
-	  m_is_empty(true), m_color_text(GetSysColor(COLOR_WINDOWTEXT))
+CLoginEdit::CLoginEdit(const CString& default_text, bool use_pwd_char) :
+	m_use_pwd_char(use_pwd_char),
+	m_default_text(default_text), 
+	m_bottom_fill_rect(0, 0, 0, 0), 
+	m_top_fill_rect(0, 0, 0, 0),
+	m_color_text(GetSysColor(COLOR_WINDOWTEXT))
 {}
 
 void CLoginEdit::UpdateStyle()
 {
 	m_color_text = GetSysColor(COLOR_WINDOWTEXT);
-	if (!m_is_empty)
+	CString curr_text;
+	GetWindowText(curr_text);
+	if (!curr_text.IsEmpty() && curr_text != m_default_text)
 		return;
 	if (GetSafeHwnd() == ::GetFocus())
 		SetWindowText(L"");
 	else
 	{
 		m_color_text = RGB(120, 120, 120);
-		SetWindowText(GetInputFieldName());
+		SetWindowText(m_default_text);
 	}
+}
+
+void CLoginEdit::SetText(const CString& content)
+{
+	SetWindowText(content);
+}
+CString CLoginEdit::GetText() const
+{
+	CString text;
+	GetWindowText(text);
+	return text == m_default_text ? L"" : text;
 }
 
 void CLoginEdit::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp)
@@ -100,21 +118,20 @@ UINT CLoginEdit::OnGetDlgCode()
 
 void CLoginEdit::OnEnSetfocus()
 {
-	if (m_is_empty)
-	{
-		SetWindowText(L"");
-	}
+	if (m_use_pwd_char)
+		SetPasswordChar(PWD_CHAR); // Use password mode.
 	UpdateStyle();
 }
 
 void CLoginEdit::OnEnKillfocus()
 {
-	CString text_content;
-	GetWindowText(text_content);
-	if (!text_content.IsEmpty())
-		m_is_empty = false;
-	else
-		m_is_empty = true;
+	if (m_use_pwd_char)
+	{
+		CString curr_text;
+		GetWindowText(curr_text);
+		if (curr_text.IsEmpty())
+			SetPasswordChar(0); // Turn off the password mode.
+	}
 	UpdateStyle();
 }
 
@@ -123,70 +140,3 @@ HBRUSH CLoginEdit::CtlColor(CDC* pDC, UINT nCtlColor)
 	pDC->SetTextColor(m_color_text);
 	return CreateSolidBrush(GetSysColor(COLOR_WINDOW));
 }
-
-void CAccountEdit::SetContent(const std::wstring& content)
-{
-	m_is_empty = content.empty();
-	SetWindowText(content.c_str());
-}
-
-void CAccountEdit::GetContent(CString& content) const
-{
-	if (!m_is_empty)
-		GetWindowText(content);
-	else
-		content = L"";
-}
-
-CString CAccountEdit::GetInputFieldName() const
-{
-	return L"”√ªß√˚";
-}
-
-BEGIN_MESSAGE_MAP(CPwdEdit, CLoginEdit)
-	ON_CONTROL_REFLECT(EN_CHANGE, &CPwdEdit::OnEnChange)
-END_MESSAGE_MAP()
-
-void CPwdEdit::GetContent(CString& content) const
-{
-	if (!m_is_empty)
-		content = m_pwd;
-	else
-		content = L"";
-}
-
-void CPwdEdit::OnEnChange()
-{
-	CString text_content;
-	GetWindowText(text_content);
-
-	const int pwd_length = m_pwd.GetLength();
-	const int content_length = text_content.GetLength();
-	const int d_value = content_length - pwd_length;
-
-	if (GetSafeHwnd() == ::GetFocus() && 0 != d_value)
-	{
-		m_is_empty = content_length <= 0;
-
-		if (d_value > 0)
-			m_pwd += text_content.Mid(pwd_length);
-		else
-			m_pwd = m_pwd.Mid(0, content_length);
-
-		SetMaskStr(content_length);
-		SetSel(content_length, content_length);
-	}
-}
-
-void CPwdEdit::SetMaskStr(unsigned int length)
-{
-	const wchar_t kMask = 0x25CF; // "°Ò" 
-	SetWindowText(std::wstring(length, kMask).c_str());
-}
-
-CString CPwdEdit::GetInputFieldName() const
-{
-	return L"√‹¬Î";
-}
-
-

@@ -501,8 +501,10 @@ bool CMainFrame::FilterMenuBar()
 				file_path.c_str(), IMAGE_ICON, MENU_ICON_WIDTH, MENU_ICON_HEIGHT, LR_DEFAULTCOLOR | LR_LOADFROMFILE);
 			m_authorized_menu_icons.emplace(std::make_pair(criter->first, hicon));
 			
-			// 使用从服务器获取的菜单标题来更新菜单标题
-			menu->ModifyMenu(criter->first, MF_BYCOMMAND, criter->first, criter->second.remark.c_str());
+			// 针对需要服务器端授权的菜单项，使用从服务器获取的菜单标题来更新菜单标题,
+			// 对于无需服务器端授权的“本地菜单项”，则无需更新。
+			if (!m_menu_res_auth_manager.IsLocalMenuItem(criter->first))
+				menu->ModifyMenu(criter->first, MF_BYCOMMAND, criter->first, criter->second.remark.c_str());
 		}
 	}
 	main_wnd->DrawMenuBar();

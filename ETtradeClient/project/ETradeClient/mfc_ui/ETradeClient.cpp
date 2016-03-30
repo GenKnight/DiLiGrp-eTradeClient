@@ -99,6 +99,16 @@ BOOL CETradeClientApp::InitInstance()
 		LOG_FATAL(L"CEF初始化失败！程序关闭。");
 		return FALSE;
 	}
+
+	// 注册程序实例并检查是否已经存在运行中的实例，如果有则注册失败并退出，
+	// 该机制用于防止多个程序实例同时运行。
+	// ！！！一定要程序实例注册放在初始化CEF（“InitializeCef”）之后
+	// 因为CEF自身会创建多个同名进程，如果将此机制放在CEF初始化之前，将导致CEF创建渲染进程失败，从而无法显示网页内容。
+	if (!m_instance_mgr.Register(APP_ID))
+	{
+		LOG_FATAL(L"无法同时运行多个程序实例，程序实例注册失败，程序未启动。");
+		return false;
+	}
 	
 	LOG_TRACE(L"程序启动。"); // Start logging after the "InitializeCef" was called.
 
@@ -177,6 +187,7 @@ int CETradeClientApp::ExitInstance()
 	}
 
 	AfxOleTerm(FALSE);
+	m_instance_mgr.Unregister();
 	return CWinApp::ExitInstance();
 }
 
@@ -269,4 +280,33 @@ void CETradeClientApp::OnAppAbout()
 // CETradeClientApp message handlers
 
 
+// InstanceManager
+CETradeClientApp::InstanceManager::InstanceManager() : m_mutex_handle(nullptr)
+{}
 
+CETradeClientApp::InstanceManager::~InstanceManager()
+{
+	Unregister();
+}
+
+bool CETradeClientApp::InstanceManager::Register(const std::wstring& app_id)
+{
+	HANDLE hHandle = CreateMutex(NULL, TRUE, app_id.c_str());
+	if (ERROR_ALREADY_EXISTS == GetLastError())
+	{
+		// Log
+		return false;
+	}
+	m_mutex_handle = hHandle;
+	return true;
+}
+
+void CETradeClientApp::InstanceManager::Unregister()
+{
+	if (nullptr != m_mutex_handle)
+	{
+		ReleaseMutex(m_mutex_handle); // Explicitly release mutex
+		CloseHandle(m_mutex_handle); // close handle before terminating
+		m_mutex_handle = nullptr;
+	}
+}

@@ -1,6 +1,6 @@
 {
-	"protocol": "https",
-	"host": "icard.diligrp.com",
+	"protocol": "http",
+	"host": "card.esc.diligrp.com",
 	"port": 0,
 	"main_path": "/user/initMain.page",
 	"login_path": "/counter/authorizeCounter.auth",

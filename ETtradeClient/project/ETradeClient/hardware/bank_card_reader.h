@@ -29,7 +29,7 @@ private:
 	void SelectDF() const;
 	// 底层接口放回的数据为 unsigned char，所以此处用std::basic_string<unsigned char>存放数据并做返回值
 	RecordDataT ReadDFRecord() const;
-	std::string ParseRecordData(const RecordDataT& data) const;
+	std::string ParseDFRecord(const RecordDataT& data) const;
 
 private:
 	mutable HANDLE m_icdev;

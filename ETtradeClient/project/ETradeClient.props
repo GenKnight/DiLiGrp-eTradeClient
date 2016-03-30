@@ -27,6 +27,7 @@ xcopy /y $(ProjectDir)\ExLib\hardware\id_card_reader\*.dll $(OutputPath)
 xcopy /y $(ProjectDir)\ExLib\hardware\pin_pad\*.dll $(OutputPath)
 xcopy /y $(ProjectDir)\ExLib\hardware\pwd_machine\*.dll $(OutputPath)
 xcopy /y $(ProjectDir)\ExLib\openssl_aes_cbc\*.dll $(OutputPath)
+xcopy /y $(ProjectDir)\ExLib\mfc\*.dll $(OutputPath)
 xcopy /y/e/i $(ProjectDir)\Config\*.* $(OutputPath)\Config
 xcopy /y/e/i $(ProjectDir)\Resource\*.* $(OutputPath)\Resource
 rmdir $(OutputPath)\locales</Command>

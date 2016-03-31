@@ -140,3 +140,9 @@ HBRUSH CLoginEdit::CtlColor(CDC* pDC, UINT nCtlColor)
 	pDC->SetTextColor(m_color_text);
 	return CreateSolidBrush(GetSysColor(COLOR_WINDOW));
 }
+
+void CLoginEdit::PreSubclassWindow()
+{
+	UpdateStyle();
+	CEdit::PreSubclassWindow();
+}

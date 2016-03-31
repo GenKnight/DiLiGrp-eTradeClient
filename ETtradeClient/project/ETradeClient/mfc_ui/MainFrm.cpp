@@ -46,86 +46,22 @@ namespace
 
 	enum ToolBarBtnID // Cannot use enum class due to TBBUTTON asks for integer.
 	{
-		GO_BACK			= 4000,
-		GO_FORWARD		= 4001,
-		RELOAD			= 4002,
-		USER_MESSAGE	= 4003,
-		USER_ACCOUNT	= 4004,
+		RELOAD			= 4000,
+		USER_MESSAGE	= 4001,
+		USER_ACCOUNT	= 4002,
 	};
 
 	// Use relative path.
 	static const std::wstring TOOLBAR_ICON_FOLDER(L".\\Resource\\Toolbar\\"); // Use 'wstring' because MFC ask for this.
 	static const std::wstring MENU_ICON_FOLDER = L".\\Resource\\Menu\\";
 
-	static const std::vector<std::wstring> kWebNaviIcon =
-	{
-		_T("arrow-left.ico"),
-		_T("arrow-right.ico"),
-		_T("reload.ico")
-	};
-	// Icon for the disabled toolbar buttons.
-	static const std::vector<std::wstring> kWebNaviIconDisabled =
-	{
-		_T("arrow-left_d.ico"),
-		_T("arrow-right_d.ico"),
-		_T("reload_d.ico")
-	};
-	static std::vector<TBBUTTON> kWebNaviBtn =
-	{
-		{ 0, GO_BACK, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
-		{ 1, GO_FORWARD, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
-		{ 2, RELOAD, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 }
-	};
-
-	static std::vector<std::wstring> kExFuncText =
-	{
-		_T("消息"),
-		_T("账户")
-	};
-	static const std::vector<std::wstring> kExFuncIcon =
-	{
-		_T("message.ico"),
-		_T("user.ico")
-	};
-	// Icon for the disabled toolbar buttons.
-	static const std::vector<std::wstring> kExFuncIconDisabled =
-	{
-		_T("message_d.ico"),
-		_T("user_d.ico")
-	};
-	static std::vector<TBBUTTON> kExFuncBtn =
-	{
-		{ 0, USER_MESSAGE, TBSTATE_ENABLED, BTNS_AUTOSIZE | BTNS_BUTTON, 0, 0 },
-		{ 1, USER_ACCOUNT, TBSTATE_ENABLED, BTNS_AUTOSIZE | BTNS_BUTTON | BTNS_WHOLEDROPDOWN, 0, 0 }
-	};
-
-	static std::vector<std::wstring> kQuickAccessIcon =
-	{
-		_T("issue_master_card.ico"),
-		_T("issue_slave_card.ico"),
-		_T("issue_anonymous_card.ico"),
-		_T("cash_recharge.ico"),
-		_T("cash_withdraw.ico"),
-		_T("settle_accounts_apply.ico")
-	};
-	// Icon for the disabled toolbar buttons.
-	static std::vector<std::wstring> kQuickAccessDisabled =
-	{
-		_T("issue_master_card_d.ico"),
-		_T("issue_slave_card_d.ico"),
-		_T("issue_anonymous_card_d.ico"),
-		_T("cash_recharge_d.ico"),
-		_T("cash_withdraw_d.ico"),
-		_T("settle_accounts_apply_d.ico")
-	};
 	static std::vector<TBBUTTON> kQuickAccessBtn =
 	{
 		{ 0, ID_ISSUE_MASTER_CARD, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
-		{ 1, ID_ISSUE_SLAVE_CARD, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
-		{ 2, ID_ISSUE_ANONYMOUS_CARD, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
-		{ 3, ID_CASH_RECHARGE, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
-		{ 4, ID_CASH_WITHDRAW, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
-		{ 5, ID_SETTLE_ACCOUNTS_APPLY, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 }
+		{ 1, ID_ISSUE_ANONYMOUS_CARD, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
+		{ 2, ID_CASH_RECHARGE, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
+		{ 3, ID_CASH_WITHDRAW, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
+		{ 4, ID_SETTLE_ACCOUNTS_APPLY, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 }
 	};
 } // namespace
 
@@ -141,17 +77,15 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_WM_DRAWITEM()
 	ON_WM_INITMENUPOPUP()
 
-	ON_UPDATE_COMMAND_UI(GO_BACK, &CMainFrame::OnUpdateToolBarGoBack)
-	ON_UPDATE_COMMAND_UI(GO_FORWARD, &CMainFrame::OnUpdateToolBarGoForward)
-	ON_UPDATE_COMMAND_UI(USER_MESSAGE, &CMainFrame::OnUpdateToolBarMsgCount)
-
-	ON_COMMAND_RANGE(GO_BACK, USER_ACCOUNT, OnToolBarBtnClicked)
 	ON_NOTIFY(TBN_DROPDOWN, AFX_IDW_TOOLBAR, OnToolbarDropDown)
 	ON_COMMAND(ID_EXIT, OnExit)
 	ON_COMMAND(ID_MODIFY_PASSWORD, OnModifyPwd)
 	ON_COMMAND(ID_MODIFY_CONFIG, OnModifyConfig)
-	ON_COMMAND_RANGE(ID_ISSUE_MASTER_CARD, ID_OPER_LOG_QUERY, OnMenuBtnClicked)
+	ON_UPDATE_COMMAND_UI(USER_MESSAGE, &CMainFrame::OnUpdateToolBarMsgCount)
 
+	ON_COMMAND_RANGE(ID_ISSUE_MASTER_CARD, ID_OPER_LOG_QUERY, OnMenuBtnClicked)
+	ON_COMMAND_RANGE(RELOAD, USER_ACCOUNT, OnToolBarBtnClicked)
+	
 	ON_MESSAGE(WM_CEF_SESSION_EXPIRED, OnSessionExpired)
 	ON_MESSAGE(WM_UPDATE_USER_MSG_COUNT,OnGotMsgCount)
 END_MESSAGE_MAP()
@@ -349,16 +283,6 @@ void CMainFrame::OnInitMenuPopup(CMenu* pMenu, UINT nIndex, BOOL bSysMenu)
 	//@}
 }
 
-void CMainFrame::OnUpdateToolBarGoBack(CCmdUI *pCmdUI)
-{
-	pCmdUI->Enable(m_view.BrowserState() & CEF_BIT_CAN_GO_BACK);
-}
-
-void CMainFrame::OnUpdateToolBarGoForward(CCmdUI *pCmdUI)
-{
-	pCmdUI->Enable(m_view.BrowserState() & CEF_BIT_CAN_GO_FORWARD);
-}
-
 void CMainFrame::OnUpdateToolBarMsgCount(CCmdUI *pCmdUI)
 {
 	if (m_msg_count > 0)
@@ -371,12 +295,6 @@ void CMainFrame::OnToolBarBtnClicked(UINT btn_id)
 {
 	switch (btn_id)
 	{
-	case GO_BACK:
-		m_view.Browser().GoBack();
-		break;
-	case GO_FORWARD:
-		m_view.Browser().GoForward();
-		break;
 	case RELOAD:
 		m_view.Browser().Reload();
 		break;
@@ -586,11 +504,13 @@ bool CMainFrame::CreateMainFrmUI()
 
 bool CMainFrame::CreateWebNaviToolBar()
 {
+	static const std::vector<std::wstring> kWebNaviIcon = { _T("reload.ico") };
+	static std::vector<TBBUTTON> kWebNaviBtn = { { 0, RELOAD, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 } };
+
 	if (!m_web_navi_tlb.CreateEx(this, TBSTYLE_TRANSPARENT))
 		return false; // fail to create
 
-	if (!m_web_navi_tlb_imgs.Create(TOOLBAR_ICON_WIDTH, TOOLBAR_ICON_HEIGHT, ILC_COLOR32 | ILC_MASK, 0, 0) ||
-		!m_web_navi_tlb_disabled_imgs.Create(TOOLBAR_ICON_WIDTH, TOOLBAR_ICON_HEIGHT, ILC_COLOR32 | ILC_MASK, 0, 0))
+	if (!m_web_navi_tlb_imgs.Create(TOOLBAR_ICON_WIDTH, TOOLBAR_ICON_HEIGHT, ILC_COLOR32 | ILC_MASK, 0, 0))
 		return false;
 
 	for (const auto& icon_name : kWebNaviIcon)
@@ -606,27 +526,13 @@ bool CMainFrame::CreateWebNaviToolBar()
 		m_web_navi_tlb_imgs.Add(icon);
 	}
 
-	for (const auto& icon_name : kWebNaviIconDisabled)
-	{
-		std::wstring file_path = TOOLBAR_ICON_FOLDER + icon_name;
-		if (!fs::exists(file_path))
-		{
-			LOG_ERROR(L"图片文件：" + file_path + L"不存在, 请检查！");
-			return false;
-		}
-		HICON icon = (HICON)LoadImage(
-			AfxGetResourceHandle(), file_path.c_str(), IMAGE_ICON, TOOLBAR_ICON_WIDTH, TOOLBAR_ICON_HEIGHT, LR_DEFAULTCOLOR | LR_LOADFROMFILE);
-		m_web_navi_tlb_disabled_imgs.Add(icon);
-	}
-
 	CToolBarCtrl& tbc = m_web_navi_tlb.GetToolBarCtrl();
 	for (auto& btn : kWebNaviBtn)
 		tbc.AddButtons(1, &btn);
 
 	tbc.SetImageList(&m_web_navi_tlb_imgs);
-	tbc.SetDisabledImageList(&m_web_navi_tlb_disabled_imgs);
 
-	const uint32_t kPaddingWidth = 15;
+	const uint32_t kPaddingWidth = 45;
 	UpdateToolbarBtnSize(m_web_navi_tlb, kPaddingWidth); // Make sure to set toolbar button size after the button text has been set.
 	
 	return true;
@@ -636,26 +542,19 @@ bool CMainFrame::CreateQuickAccessToolBar()
 {
 	if (!m_quick_access_tlb.CreateEx(this, TBSTYLE_TRANSPARENT | TBSTYLE_LIST))
 		return false; // fail to create
-	if (!m_quick_access_tlb_imgs.Create(TOOLBAR_ICON_WIDTH, TOOLBAR_ICON_HEIGHT, ILC_COLOR32 | ILC_MASK, 0, 0) ||
-		!m_quick_access_tlb_disabled_imgs.Create(TOOLBAR_ICON_WIDTH, TOOLBAR_ICON_HEIGHT, ILC_COLOR32 | ILC_MASK, 0, 0))
+	if (!m_quick_access_tlb_imgs.Create(TOOLBAR_ICON_WIDTH, TOOLBAR_ICON_HEIGHT, ILC_COLOR32 | ILC_MASK, 0, 0))
 		return false;
+	
+	CToolBarCtrl& tbc = m_quick_access_tlb.GetToolBarCtrl();
+	tbc.SetImageList(&m_quick_access_tlb_imgs); // 注意这一句必须放在为“SetButtonText”和“UpdateToolbarBtnSize”之前，否则会出现宽度计算错误
 
-	for (const auto& icon_name : kQuickAccessIcon)
+	const auto& res_auth_map = m_menu_res_auth_manager.MenuItems();
+	int index = 0;
+	for (auto& btn : kQuickAccessBtn)
 	{
-		std::wstring file_path = TOOLBAR_ICON_FOLDER + icon_name;
-		if (!fs::exists(file_path))
-		{
-			LOG_ERROR(L"图片文件："+file_path+L"不存在, 请检查！");
-			return false;
-		}
-		HICON icon = (HICON)LoadImage(
-			AfxGetResourceHandle(), file_path.c_str(), IMAGE_ICON, TOOLBAR_ICON_WIDTH, TOOLBAR_ICON_HEIGHT, LR_DEFAULTCOLOR | LR_LOADFROMFILE);
-		m_quick_access_tlb_imgs.Add(icon);
-	}
+		tbc.AddButtons(1, &btn);
 
-	for (const auto& icon_name : kQuickAccessDisabled)
-	{
-		std::wstring file_path = TOOLBAR_ICON_FOLDER + icon_name;
+		std::wstring file_path = TOOLBAR_ICON_FOLDER + str_2_wstr(res_auth_map.at(btn.idCommand).icon_name);
 		if (!fs::exists(file_path))
 		{
 			LOG_ERROR(L"图片文件：" + file_path + L"不存在, 请检查！");
@@ -663,29 +562,39 @@ bool CMainFrame::CreateQuickAccessToolBar()
 		}
 		HICON icon = (HICON)LoadImage(
 			AfxGetResourceHandle(), file_path.c_str(), IMAGE_ICON, TOOLBAR_ICON_WIDTH, TOOLBAR_ICON_HEIGHT, LR_DEFAULTCOLOR | LR_LOADFROMFILE);
-		m_quick_access_tlb_disabled_imgs.Add(icon);
-	}
-
-	CToolBarCtrl& tbc = m_quick_access_tlb.GetToolBarCtrl();
-	for (auto& btn : kQuickAccessBtn)
-		tbc.AddButtons(1, &btn);
-
-	tbc.SetImageList(&m_quick_access_tlb_imgs);
-	tbc.SetDisabledImageList(&m_quick_access_tlb_disabled_imgs);
-
-	int index = 0;
-	const auto& res_auth_map = m_menu_res_auth_manager.MenuItems();
-	for (auto& btn : kQuickAccessBtn)
-	{
+		m_quick_access_tlb_imgs.Add(icon);
 		m_quick_access_tlb.SetButtonText(index, res_auth_map.at(btn.idCommand).remark.c_str());
 		index++;
 	}
+	
 	UpdateToolbarBtnSize(m_quick_access_tlb); // Make sure to set toolbar button size after the button text has been set.
 	return true;
 }
 
 bool CMainFrame::CreateExFuncToolBar()
 {
+	static std::vector<std::wstring> kExFuncText =
+	{
+		_T("消息"),
+		_T("账户")
+	};
+	static const std::vector<std::wstring> kExFuncIcon =
+	{
+		_T("message.ico"),
+		_T("user.ico")
+	};
+	// Icon for the disabled toolbar buttons.
+	static const std::vector<std::wstring> kExFuncIconDisabled =
+	{
+		_T("message_d.ico"),
+		_T("user_d.ico")
+	};
+	static std::vector<TBBUTTON> kExFuncBtn =
+	{
+		{ 0, USER_MESSAGE, TBSTATE_ENABLED, BTNS_AUTOSIZE | BTNS_BUTTON, 0, 0 },
+		{ 1, USER_ACCOUNT, TBSTATE_ENABLED, BTNS_AUTOSIZE | BTNS_BUTTON | BTNS_WHOLEDROPDOWN, 0, 0 }
+	};
+
 	if (!m_ex_func_tlb.CreateEx(this, TBSTYLE_TRANSPARENT | TBSTYLE_LIST))
 		return false; // fail to create
 	if (!m_ex_func_tlb_imgs.Create(TOOLBAR_ICON_WIDTH, TOOLBAR_ICON_HEIGHT, ILC_COLOR32 | ILC_MASK, 0, 0) ||

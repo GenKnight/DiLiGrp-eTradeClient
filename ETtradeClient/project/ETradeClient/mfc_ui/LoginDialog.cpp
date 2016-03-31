@@ -166,9 +166,6 @@ BOOL CLoginDialog::OnInitDialog()
 	SetSubCtrlStyle();
 	SetSubCtrlLayout();
 
-	m_account_edit.UpdateStyle();
-	m_pwd_edit.UpdateStyle();
-
 	SetWindowText(m_title.c_str());
 	if (!Session::Instance().UserName().empty())
 	{

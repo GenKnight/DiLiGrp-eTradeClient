@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hardware Test.</title>
+    <script language="JavaScript">
+
+    function SetInput()
+    {
+    	document.getElementById('input').value = "{\"command\":\"read\",\"fileId\":\"11\", \"data\":\"\",\"seq\":\"123\"}";
+    }
+
+    // Send a query to the browser process.
+    function Execute() {
+      // Results in a call to the OnQuery method in binding_test.cpp
+      
+      var request_json = document.getElementById('input').value; // Specify the request json.
+
+      //alert("Before!");
+      
+      var request_id = window.cefQuery(
+      {
+        request: request_json,
+        persistent: false,
+        onSuccess: function(response) 
+        {
+          document.getElementById('output').value = response;
+        },
+        onFailure: function(error_code, error_message)
+        {
+          document.getElementById('output').value = 'FAIL!'; // TODO, modify this failure handler.
+        }
+      });
+
+      //alert("After!");
+    }
+    </script>
+  </head>
+
+  <body bgcolor="white" onload="SetInput();">
+  <form>
+    <br/><input type="button" onclick="Execute();" value="Execute">
+    <br/>Input Data:
+    <br/><input id="input" style="width:450px"></input>
+    <br/>Output Data:
+    <br/><textarea id="output" rows="10", cols="60"></textarea>
+  </form>
+  </body>
+</html>

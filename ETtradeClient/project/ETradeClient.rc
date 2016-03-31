@@ -162,7 +162,7 @@ FONT 9, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,14,14,20,20
     LTEXT           "电子交易结算柜员系统，1.0 版",IDC_STATIC,42,14,114,8,SS_NOPREFIX
-    LTEXT           "Copyright (C) 2015",IDC_STATIC,42,26,114,8
+    LTEXT           "Copyright (C) 2016",IDC_STATIC,42,26,114,8
     DEFPUSHBUTTON   "确定",IDOK,99,41,50,14,WS_GROUP
 END
 

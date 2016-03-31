@@ -43,11 +43,7 @@ protected:
 	afx_msg void OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct);
 	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
 	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
-
-	afx_msg void OnUpdateToolBarGoBack(CCmdUI *pCmdUI);
-	afx_msg void OnUpdateToolBarGoForward(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateToolBarMsgCount(CCmdUI *pCmdUI);
-
 	afx_msg void OnToolBarBtnClicked(UINT btn_id);
 	afx_msg void OnMenuBtnClicked(UINT btn_id);
 	afx_msg void OnToolbarDropDown(NMHDR* pNMHDR, LRESULT* pResult);
@@ -80,11 +76,9 @@ private:
 
 	CToolBar 			m_web_navi_tlb;
 	CImageList 			m_web_navi_tlb_imgs;
-	CImageList 			m_web_navi_tlb_disabled_imgs; // Image list for disabled toolbar button.
 
 	CToolBar			m_quick_access_tlb;
 	CImageList			m_quick_access_tlb_imgs;
-	CImageList			m_quick_access_tlb_disabled_imgs;
 
 	CToolBar 			m_ex_func_tlb; // tool bar to provide extra functional.
 	CImageList 			m_ex_func_tlb_imgs;

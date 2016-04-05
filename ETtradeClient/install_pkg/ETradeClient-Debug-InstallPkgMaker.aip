@@ -40,6 +40,7 @@
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
     <ROW Directory="Config_Dir" Directory_Parent="APPDIR" DefaultDir="Config"/>
     <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="DESKTO~1|DesktopFolder" IsPseudoRoot="1"/>
+    <ROW Directory="Log_Dir" Directory_Parent="APPDIR" DefaultDir="Log"/>
     <ROW Directory="Login_Dir" Directory_Parent="Resource_Dir" DefaultDir="Login"/>
     <ROW Directory="Menu_Dir" Directory_Parent="Resource_Dir" DefaultDir="Menu"/>
     <ROW Directory="ProgramMenuFolder" Directory_Parent="TARGETDIR" DefaultDir="PROGRA~1|ProgramMenuFolder" IsPseudoRoot="1"/>
@@ -60,6 +61,7 @@
     <ROW Component="APPDIR" ComponentId="{9E6B4BA2-831A-483C-A393-FE9C3BABE3CE}" Directory_="APPDIR" Attributes="0"/>
     <ROW Component="ETradeClientd.exe" ComponentId="{5E65E1D5-1576-45A0-AD7A-C235F71A199E}" Directory_="APPDIR" Attributes="0" KeyPath="ETradeClientd.exe"/>
     <ROW Component="ETradeClientd.ilk" ComponentId="{1BD27E21-7F90-4C03-9C3F-9CDE837412FC}" Directory_="APPDIR" Attributes="0" KeyPath="ETradeClientd.ilk" Type="0"/>
+    <ROW Component="Log" ComponentId="{2F54C314-D2D0-4B43-A3D3-D68C10E51DEB}" Directory_="Log_Dir" Attributes="0"/>
     <ROW Component="ProductInformation" ComponentId="{ACEDEFBB-567E-4198-BC71-38246E451B4D}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
     <ROW Component="UnPack.dll" ComponentId="{73E4F96D-079F-4AD4-B253-C8424BC689BE}" Directory_="APPDIR" Attributes="0" KeyPath="UnPack.dll"/>
     <ROW Component="_" ComponentId="{906BFBF7-80C3-45AF-BD30-16D9A9678A73}" Directory_="__Dir" Attributes="0"/>
@@ -69,7 +71,6 @@
     <ROW Component="arrowleft.ico" ComponentId="{8F91352B-5497-4C64-A53B-C375AB4C9A25}" Directory_="Toolbar_Dir" Attributes="0" KeyPath="cash_recharge.ico_2" Type="0"/>
     <ROW Component="cef.pak" ComponentId="{3005A56A-AC2F-40F4-8494-158E6EAF3544}" Directory_="Resources_Dir" Attributes="0" KeyPath="cef.pak" Type="0"/>
     <ROW Component="certutil.exe" ComponentId="{5D3DEE59-06DC-4B8F-972C-F92F0E860353}" Directory_="SSL_cert_Dir" Attributes="256" KeyPath="certutil.exe"/>
-    <ROW Component="certutil.exe_1" ComponentId="{292A10A4-B660-41D0-924F-3D4010FF60AF}" Directory_="TempFolder" Attributes="256" KeyPath="certutil.exe_1"/>
     <ROW Component="d3dcompiler_43.dll" ComponentId="{2CA46B1C-F755-4330-B61E-B48A001F18F3}" Directory_="APPDIR" Attributes="0" KeyPath="d3dcompiler_43.dll"/>
     <ROW Component="d3dcompiler_47.dll" ComponentId="{15810926-0CDA-4032-A78B-B6FBE237ADAE}" Directory_="APPDIR" Attributes="0" KeyPath="d3dcompiler_47.dll"/>
     <ROW Component="dcp3.dll" ComponentId="{342FFCC1-6719-4621-ACE5-0F2635580D6F}" Directory_="APPDIR" Attributes="0" KeyPath="dcp3.dll"/>
@@ -88,12 +89,12 @@
     <ROW Component="widevinecdmadapter.dll" ComponentId="{68FCA4EC-4307-497B-B292-E830E0F3F684}" Directory_="APPDIR" Attributes="0" KeyPath="widevinecdmadapter.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
-    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_CustomARPName AI_ExePath APP.ico APPDIR ETradeClientd.exe ETradeClientd.ilk ProductInformation UnPack.dll _ about.ico am.pak application_config arrowleft.ico cef.pak certutil.exe certutil.exe_1 d3dcompiler_43.dll d3dcompiler_47.dll dcp3.dll dcrf32.dll dyn.dll icounterui.p12 libEGL.dll libGLESv2.dll libcef.dll libeay32.dll loginbg.png msvcr120.dll sdtapi.dll termb.dll union_syj1001_api.dll widevinecdmadapter.dll"/>
+    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_CustomARPName AI_ExePath APP.ico APPDIR ETradeClientd.exe ETradeClientd.ilk Log ProductInformation UnPack.dll _ about.ico am.pak application_config arrowleft.ico cef.pak certutil.exe d3dcompiler_43.dll d3dcompiler_47.dll dcp3.dll dcrf32.dll dyn.dll icounterui.p12 libEGL.dll libGLESv2.dll libcef.dll libeay32.dll loginbg.png msvcr120.dll sdtapi.dll termb.dll union_syj1001_api.dll widevinecdmadapter.dll"/>
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
     <ROW File="APP.ico" Component_="APP.ico" FileName="APP.ico" Attributes="0" SourcePath="..\build\out\Win32\Debug\Resource\APP.ico" SelfReg="false" NextFile="INSTALL.ico"/>
-    <ROW File="ClearUSBDrvUnusedFile.bat" Component_="icounterui.p12" FileName="CLEARU~1.BAT|ClearUSBDrvUnusedFile.bat" Attributes="0" SourcePath="ClearUSBDrvUnusedFile.bat" SelfReg="false"/>
+    <ROW File="ClearUSBDrvUnusedFile.bat" Component_="icounterui.p12" FileName="CLEARU~1.BAT|ClearUSBDrvUnusedFile.bat" Attributes="0" SourcePath="ClearUSBDrvUnusedFile.bat" SelfReg="false" NextFile="application_config"/>
     <ROW File="ETradeClientHTTPS.p12" Component_="icounterui.p12" FileName="ETRADE~1.P12|ETradeClient-HTTPS.p12" Attributes="0" SourcePath="ETradeClient-HTTPS.p12" SelfReg="false" NextFile="ETradeClientSelfSigature.pfx"/>
     <ROW File="ETradeClientSelfSigature.pfx" Component_="icounterui.p12" FileName="ETRADE~1.PFX|ETradeClient-SelfSigature.pfx" Attributes="0" SourcePath="ETradeClient-SelfSigature.pfx" SelfReg="false" NextFile="USBDrv3.0x64.msi"/>
     <ROW File="ETradeClientd.exe" Component_="ETradeClientd.exe" FileName="ETRADE~1.EXE|ETradeClient-d.exe" Attributes="0" SourcePath="..\build\out\Win32\Debug\ETradeClient-d.exe" SelfReg="false" NextFile="ETradeClientd.ilk" DigSign="true"/>
@@ -104,6 +105,7 @@
     <ROW File="UnPack.dll" Component_="UnPack.dll" FileName="UnPack.dll" Attributes="0" SourcePath="..\build\out\Win32\Debug\UnPack.dll" SelfReg="false" NextFile="widevinecdmadapter.dll"/>
     <ROW File="about.ico" Component_="about.ico" FileName="about.ico" Attributes="0" SourcePath="..\build\out\Win32\Debug\Resource\Menu\about.ico" SelfReg="false" NextFile="cash_recharge.ico"/>
     <ROW File="am.pak" Component_="am.pak" FileName="am.pak" Attributes="0" SourcePath="..\build\out\Win32\Debug\cef\Resources\locales\am.pak" SelfReg="false" NextFile="ar.pak"/>
+    <ROW File="application_config" Component_="application_config" FileName="APPLIC~1|application_config" Attributes="0" SourcePath="..\build\out\Win32\Debug\Config\application_config" SelfReg="false" NextFile="menu_res_auth_cfg"/>
     <ROW File="application_config.json" Component_="application_config" FileName="APPLIC~1.JSO|application_config.json" Attributes="0" SourcePath="..\build\out\Win32\Debug\Config\application_config.json" SelfReg="false" NextFile="menu_res_auth_cfg.json"/>
     <ROW File="ar.pak" Component_="am.pak" FileName="ar.pak" Attributes="0" SourcePath="..\build\out\Win32\Debug\cef\Resources\locales\ar.pak" SelfReg="false" NextFile="bg.pak"/>
     <ROW File="bg.pak" Component_="am.pak" FileName="bg.pak" Attributes="0" SourcePath="..\build\out\Win32\Debug\cef\Resources\locales\bg.pak" SelfReg="false" NextFile="bn.pak"/>
@@ -117,8 +119,7 @@
     <ROW File="cef_100_percent.pak" Component_="cef.pak" FileName="CEF_10~1.PAK|cef_100_percent.pak" Attributes="0" SourcePath="..\build\out\Win32\Debug\cef\Resources\cef_100_percent.pak" SelfReg="false" NextFile="cef_200_percent.pak"/>
     <ROW File="cef_200_percent.pak" Component_="cef.pak" FileName="CEF_20~1.PAK|cef_200_percent.pak" Attributes="0" SourcePath="..\build\out\Win32\Debug\cef\Resources\cef_200_percent.pak" SelfReg="false" NextFile="cef_extensions.pak"/>
     <ROW File="cef_extensions.pak" Component_="cef.pak" FileName="CEF_EX~1.PAK|cef_extensions.pak" Attributes="0" SourcePath="..\build\out\Win32\Debug\cef\Resources\cef_extensions.pak" SelfReg="false" NextFile="devtools_resources.pak"/>
-    <ROW File="certutil.exe" Component_="certutil.exe" FileName="certutil.exe" Attributes="0" SourcePath="certutil.exe" SelfReg="false" NextFile="certutil.exe_1" DigSign="true"/>
-    <ROW File="certutil.exe_1" Component_="certutil.exe_1" FileName="certutil.exe" Attributes="0" SourcePath="certutil.exe" SelfReg="false" NextFile="d3dcompiler_43.dll" DigSign="true"/>
+    <ROW File="certutil.exe" Component_="certutil.exe" FileName="certutil.exe" Attributes="0" SourcePath="certutil.exe" SelfReg="false" NextFile="d3dcompiler_43.dll" DigSign="true"/>
     <ROW File="change_card.ico" Component_="about.ico" FileName="CHANGE~1.ICO|change_card.ico" Attributes="0" SourcePath="..\build\out\Win32\Debug\Resource\Menu\change_card.ico" SelfReg="false" NextFile="copy.ico"/>
     <ROW File="copy.ico" Component_="about.ico" FileName="copy.ico" Attributes="0" SourcePath="..\build\out\Win32\Debug\Resource\Menu\copy.ico" SelfReg="false" NextFile="credit_sale_white_list.ico"/>
     <ROW File="credit_sale_white_list.ico" Component_="about.ico" FileName="CREDIT~1.ICO|credit_sale_white_list.ico" Attributes="0" SourcePath="..\build\out\Win32\Debug\Resource\Menu\credit_sale_white_list.ico" SelfReg="false" NextFile="customer_query.ico"/>
@@ -171,6 +172,7 @@
     <ROW File="lt.pak" Component_="am.pak" FileName="lt.pak" Attributes="0" SourcePath="..\build\out\Win32\Debug\cef\Resources\locales\lt.pak" SelfReg="false" NextFile="lv.pak"/>
     <ROW File="lv.pak" Component_="am.pak" FileName="lv.pak" Attributes="0" SourcePath="..\build\out\Win32\Debug\cef\Resources\locales\lv.pak" SelfReg="false" NextFile="ml.pak"/>
     <ROW File="manage_bank_card.ico" Component_="about.ico" FileName="MANAGE~1.ICO|manage_bank_card.ico" Attributes="0" SourcePath="..\build\out\Win32\Debug\Resource\Menu\manage_bank_card.ico" SelfReg="false" NextFile="modify_account_pwd.ico"/>
+    <ROW File="menu_res_auth_cfg" Component_="application_config" FileName="MENU_R~1|menu_res_auth_cfg" Attributes="0" SourcePath="..\build\out\Win32\Debug\Config\menu_res_auth_cfg" SelfReg="false" NextFile="url_cfg"/>
     <ROW File="menu_res_auth_cfg.json" Component_="application_config" FileName="MENU_R~1.JSO|menu_res_auth_cfg.json" Attributes="0" SourcePath="..\build\out\Win32\Debug\Config\menu_res_auth_cfg.json" SelfReg="false" NextFile="url_cfg.json"/>
     <ROW File="message.ico" Component_="arrowleft.ico" FileName="message.ico" Attributes="0" SourcePath="..\build\out\Win32\Debug\Resource\Toolbar\message.ico" SelfReg="false" NextFile="message_d.ico"/>
     <ROW File="message_d.ico" Component_="arrowleft.ico" FileName="MESSAG~1.ICO|message_d.ico" Attributes="0" SourcePath="..\build\out\Win32\Debug\Resource\Toolbar\message_d.ico" SelfReg="false" NextFile="modify_pwd.ico"/>
@@ -216,6 +218,7 @@
     <ROW File="uk.pak" Component_="am.pak" FileName="uk.pak" Attributes="0" SourcePath="..\build\out\Win32\Debug\cef\Resources\locales\uk.pak" SelfReg="false" NextFile="vi.pak"/>
     <ROW File="union_syj1001_api.dll" Component_="union_syj1001_api.dll" FileName="UNION_~1.DLL|union_syj1001_api.dll" Attributes="0" SourcePath="..\build\out\Win32\Debug\union_syj1001_api.dll" SelfReg="false" NextFile="UnPack.dll"/>
     <ROW File="unlock_card.ico" Component_="about.ico" FileName="UNLOCK~1.ICO|unlock_card.ico" Attributes="0" SourcePath="..\build\out\Win32\Debug\Resource\Menu\unlock_card.ico" SelfReg="false" NextFile="cash_recharge.ico_2"/>
+    <ROW File="url_cfg" Component_="application_config" FileName="url_cfg" Attributes="0" SourcePath="..\build\out\Win32\Debug\Config\url_cfg" SelfReg="false"/>
     <ROW File="url_cfg.json" Component_="application_config" FileName="URL_CF~1.JSO|url_cfg.json" Attributes="0" SourcePath="..\build\out\Win32\Debug\Config\url_cfg.json" SelfReg="false" NextFile="APP.ico"/>
     <ROW File="user.ico" Component_="arrowleft.ico" FileName="user.ico" Attributes="0" SourcePath="..\build\out\Win32\Debug\Resource\Toolbar\user.ico" SelfReg="false" NextFile="user_d.ico"/>
     <ROW File="user_d.ico" Component_="arrowleft.ico" FileName="user_d.ico" Attributes="0" SourcePath="..\build\out\Win32\Debug\Resource\Toolbar\user_d.ico" SelfReg="false" NextFile="ETradeClientHTTPS.p12"/>
@@ -225,7 +228,7 @@
     <ROW File="zhTW.pak" Component_="am.pak" FileName="zh-TW.pak" Attributes="0" SourcePath="..\build\out\Win32\Debug\cef\Resources\locales\zh-TW.pak" SelfReg="false" NextFile="application_config.json"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
-    <ROW BuildKey="Win32_Release" BuildName="Win32_Release" BuildOrder="1" BuildType="0" PackageFolder="InstallFiles" PackageFileName="地利集团电子交易结算柜员系统安装程序" Languages="zh" InstallationType="4" CabsLocation="1" PackageType="1" FilesInsideExe="true" ExeIconPath="..\project\Resource\Install.ico" ExtractionFolder="[AppDataFolder][|Manufacturer]\[|ProductName] [|ProductVersion]\install" ExtUI="true" UseLargeSchema="true" ExeName="地利集团电子交易结算柜员系统安装程序" UACExecutionLevel="2"/>
+    <ROW BuildKey="Win32_Release" BuildName="Win32_Release" BuildOrder="1" BuildType="0" PackageFolder="InstallFiles\Debug" PackageFileName="地利集团电子交易结算柜员系统安装程序" Languages="zh" InstallationType="4" CabsLocation="1" PackageType="1" FilesInsideExe="true" ExeIconPath="..\project\Resource\Install.ico" ExtractionFolder="[AppDataFolder][|Manufacturer]\[|ProductName] [|ProductVersion]\install" ExtUI="true" UseLargeSchema="true" ExeName="地利集团电子交易结算柜员系统安装程序" UACExecutionLevel="2"/>
     <ATTRIBUTE name="CurrentBuild" value="Win32_Release"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
@@ -332,11 +335,11 @@
     <ROW Dialog_="DiskCostDlg" Control="Text" Type="Text" X="20" Y="53" Width="330" Height="42" Attributes="3" Text="突出显示的卷 (如果有) 没有足够的磁盘空间来安装当前选择的功能。您可以从突出显示的卷上删除一些文件，或者选择在本地磁盘上安装较少的功能，或者选择不同的目标磁盘。" Order="600" TextLocId="Control.Text.DiskCostDlg#Text" MsiKey="DiskCostDlg#Text"/>
     <ROW Dialog_="DiskCostDlg" Control="Description" Type="Text" X="20" Y="20" Width="280" Height="20" Attributes="196611" Text="安装所选功能所需的磁盘空间。" Order="700" TextLocId="Control.Text.DiskCostDlg#Description" MsiKey="DiskCostDlg#Description"/>
     <ROW Dialog_="DiskCostDlg" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="800" MsiKey="DiskCostDlg#BannerLine"/>
+    <ROW Dialog_="ErrorDlg" Control="Y" Type="PushButton" X="100" Y="80" Width="56" Height="20" Attributes="3" Text="[ButtonText_Yes]" Order="-1" TextLocId="-" MsiKey="ErrorDlg#Y" Options="1"/>
+    <ROW Dialog_="ErrorDlg" Control="O" Type="PushButton" X="100" Y="80" Width="56" Height="20" Attributes="3" Text="[ButtonText_OK]" Order="-1" TextLocId="-" MsiKey="ErrorDlg#O" Options="1"/>
     <ROW Dialog_="ErrorDlg" Control="A" Type="PushButton" X="100" Y="80" Width="56" Height="20" Attributes="3" Text="[ButtonText_Cancel]" Order="-1" TextLocId="-" MsiKey="ErrorDlg#A" Options="1"/>
     <ROW Dialog_="ErrorDlg" Control="C" Type="PushButton" X="100" Y="80" Width="56" Height="20" Attributes="3" Text="[ButtonText_Cancel]" Order="-1" TextLocId="-" MsiKey="ErrorDlg#C" Options="1"/>
     <ROW Dialog_="ErrorDlg" Control="I" Type="PushButton" X="100" Y="80" Width="56" Height="20" Attributes="3" Text="[ButtonText_Ignore]" Order="-1" TextLocId="-" MsiKey="ErrorDlg#I" Options="1"/>
-    <ROW Dialog_="ErrorDlg" Control="Y" Type="PushButton" X="100" Y="80" Width="56" Height="20" Attributes="3" Text="[ButtonText_Yes]" Order="-1" TextLocId="-" MsiKey="ErrorDlg#Y" Options="1"/>
-    <ROW Dialog_="ErrorDlg" Control="O" Type="PushButton" X="100" Y="80" Width="56" Height="20" Attributes="3" Text="[ButtonText_OK]" Order="-1" TextLocId="-" MsiKey="ErrorDlg#O" Options="1"/>
     <ROW Dialog_="ErrorDlg" Control="N" Type="PushButton" X="100" Y="80" Width="56" Height="20" Attributes="3" Text="[ButtonText_No]" Order="-1" TextLocId="-" MsiKey="ErrorDlg#N" Options="1"/>
     <ROW Dialog_="ErrorDlg" Control="R" Type="PushButton" X="100" Y="80" Width="56" Height="20" Attributes="3" Text="[ButtonText_Retry]" Order="-1" TextLocId="-" MsiKey="ErrorDlg#R" Options="1"/>
     <ROW Dialog_="ExitDialog" Control="Finish" Type="PushButton" X="216" Y="243" Width="68" Height="20" Attributes="3" Text="[ButtonText_Finish]" Order="100" TextLocId="-" MsiKey="ExitDialog#Finish" Options="1"/>
@@ -497,6 +500,7 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
     <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
     <ROW Directory_="__Dir" Component_="_" ManualDelete="false"/>
+    <ROW Directory_="Log_Dir" Component_="Log" ManualDelete="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
     <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH_ORIGINAL" Target="[AI_SETUPEXEPATH]"/>

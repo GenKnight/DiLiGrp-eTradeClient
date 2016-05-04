@@ -2,7 +2,7 @@
 	"protocol": "http",
 	"host": "card.esc.diligrp.com",
 	"port": 0,
-	"main_path": "/user/initMain.page",
+	"main_path": "/user/clientInitMain.page",
 	"login_path": "/counter/authorizeCounter.auth",
 	"logout_path": "/user/doLogout.auth",
 	"menu_auth_path":"/counter/loadPermission.do", 

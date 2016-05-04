@@ -163,7 +163,7 @@ namespace DILICard
 		// 例如，龙虾卡最多只能制作2500张，我们估计这种做法仅仅是为了兼容前期的一些制作不规范的卡片，
 		
 		// 黑金.龙虾卡8888 0003 0001 - 8888 0003 2500, 卡类型编码：100001
-		static const CardTypeCfg CARD_TYPE_LONGXIA = { "100001", 30001, 32500 }; // 龙虾卡
+		static const CardTypeCfg CARD_TYPE_LONGXIA = { "100001", 30001, 40000 }; // 龙虾卡
 
 		// 铂金.蓝莓卡8888 0001 0001-8888 0001 2500, 卡类型编码：100002
 		static const CardTypeCfg CARD_TYPE_LANMEI = { "100002", 10001, 12500 }; // 蓝莓卡
@@ -175,7 +175,7 @@ namespace DILICard
 		static const CardTypeCfg CARD_TYPE_MAISUI = { "100003", 21001, 23000 }; // 麦穗卡
 
 		// 青绿.豆荚卡8888 0000 0001-8888 0000 2500, 卡类型编码：100004
-		static const CardTypeCfg CARD_TYPE_DOUJIA = { "100004", 1, 2500 }; // 豆荚卡
+		static const CardTypeCfg CARD_TYPE_DOUJIA = { "100004", 1, 10000 }; // 豆荚卡
 
 		const char kKeyID = NULL; // No need to do authentication.
 		const std::string kKey = "";

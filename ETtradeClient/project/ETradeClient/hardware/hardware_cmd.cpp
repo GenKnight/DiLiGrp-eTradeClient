@@ -82,8 +82,8 @@ namespace
 ReadPINPadCmd::Reply ReadPINPadCmd::Execute(const std::string& input)
 {
 	LOG_TRACE(L"读取用户输入密码。");
-	static const uint8_t PWD_MAX_LEN = ApplicationConfig::Instance().PINPadPWDLen();
-	static const uint8_t TIMEOUT = ApplicationConfig::Instance().PINPadTimeout();
+	const uint8_t PWD_MAX_LEN = ApplicationConfig::Instance().PINPadPWDLen();
+	const uint8_t TIMEOUT = ApplicationConfig::Instance().PINPadTimeout();
 	auto& pin_pad = PINPad_();
 	std::string pwd("");
 	Reply reply;
@@ -182,10 +182,10 @@ ReadPINPadCmd::Reply ReadIDCardCmd::Execute(const std::string& input)
 
 ReadPINPadCmd::Reply ActivateDILICardCmd::Execute(const std::string& input)
 {
-	static const uint8_t BEEP_TIME = 20; // 20 * 10ms
-	static const std::string PWD_MACHINE_IP = ApplicationConfig::Instance().PWDMachineIP();
-	static const uint32_t PWD_MACHINE_PORT = ApplicationConfig::Instance().PWDMachinePort();
-	static const uint8_t TIMEOUT = ApplicationConfig::Instance().PWDMachineTimeout();
+	const uint8_t BEEP_TIME = 20; // 20 * 10ms
+	const std::string PWD_MACHINE_IP = ApplicationConfig::Instance().PWDMachineIP();
+	const uint32_t PWD_MACHINE_PORT = ApplicationConfig::Instance().PWDMachinePort();
+	const uint8_t TIMEOUT = ApplicationConfig::Instance().PWDMachineTimeout();
 
 	LOG_TRACE(L"卡片激活。");
 	auto& dili_card_device = DILICardRWDevice();
@@ -257,10 +257,10 @@ ReadPINPadCmd::Reply ActivateDILICardCmd::Execute(const std::string& input)
 
 ReadPINPadCmd::Reply ResetDILICardCmd::Execute(const std::string& input)
 {
-	static const uint8_t BEEP_TIME = 20; // 20 * 10ms
-	static const std::string PWD_MACHINE_IP = ApplicationConfig::Instance().PWDMachineIP();
-	static const uint32_t PWD_MACHINE_PORT = ApplicationConfig::Instance().PWDMachinePort();
-	static const uint8_t TIMEOUT = ApplicationConfig::Instance().PWDMachineTimeout();
+	const uint8_t BEEP_TIME = 20; // 20 * 10ms
+	const std::string PWD_MACHINE_IP = ApplicationConfig::Instance().PWDMachineIP();
+	const uint32_t PWD_MACHINE_PORT = ApplicationConfig::Instance().PWDMachinePort();
+	const uint8_t TIMEOUT = ApplicationConfig::Instance().PWDMachineTimeout();
 
 	LOG_TRACE(L"卡片撤销激活。");
 	auto& dili_card_device = DILICardRWDevice();
@@ -372,10 +372,10 @@ ReadPINPadCmd::Reply ReadDILICardBasicInfoCmd::Execute(const std::string& input)
 
 ReadPINPadCmd::Reply ReadDILICardServiceInfoCmd::Execute(const std::string& input)
 {
-	static const std::string PWD_MACHINE_IP = ApplicationConfig::Instance().PWDMachineIP();
-	static const uint32_t PWD_MACHINE_PORT = ApplicationConfig::Instance().PWDMachinePort();
-	static const uint8_t TIMEOUT = ApplicationConfig::Instance().PWDMachineTimeout();
-	static const uint8_t BEEP_TIME = 20; // 20 * 10ms
+	const std::string PWD_MACHINE_IP = ApplicationConfig::Instance().PWDMachineIP();
+	const uint32_t PWD_MACHINE_PORT = ApplicationConfig::Instance().PWDMachinePort();
+	const uint8_t TIMEOUT = ApplicationConfig::Instance().PWDMachineTimeout();
+	const uint8_t BEEP_TIME = 20; // 20 * 10ms
 	LOG_TRACE(L"读取卡片业务信息。");
 	auto& dili_card_device = DILICardRWDevice();
 	auto& pwd_machine = PWDMachine_();
@@ -432,11 +432,11 @@ ReadPINPadCmd::Reply ReadDILICardServiceInfoCmd::Execute(const std::string& inpu
 
 ReadPINPadCmd::Reply WriteDILICardServiceInfoCmd::Execute(const std::string& input)
 {
-	static const char DATA_SPLITER = ':';
-	static const uint8_t BEEP_TIME = 20; // 20 * 10ms
-	static const std::string PWD_MACHINE_IP = ApplicationConfig::Instance().PWDMachineIP();
-	static const uint32_t PWD_MACHINE_PORT = ApplicationConfig::Instance().PWDMachinePort();
-	static const uint8_t TIMEOUT = ApplicationConfig::Instance().PWDMachineTimeout();
+	const char DATA_SPLITER = ':';
+	const uint8_t BEEP_TIME = 20; // 20 * 10ms
+	const std::string PWD_MACHINE_IP = ApplicationConfig::Instance().PWDMachineIP();
+	const uint32_t PWD_MACHINE_PORT = ApplicationConfig::Instance().PWDMachinePort();
+	const uint8_t TIMEOUT = ApplicationConfig::Instance().PWDMachineTimeout();
 
 	LOG_TRACE(L"写入卡片业务信息。");
 	auto& dili_card_device = DILICardRWDevice();

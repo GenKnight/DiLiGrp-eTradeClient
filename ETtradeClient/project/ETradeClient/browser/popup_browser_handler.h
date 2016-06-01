@@ -41,9 +41,6 @@ public:
 	virtual bool OnContextMenuCommand(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefContextMenuParams> params, int command_id, EventFlags event_flags) OVERRIDE;
 	//@}
 private:
-	void LoadErrorPage(CefRefPtr<CefFrame> frame, const std::string& failed_url, cef_errorcode_t error_code, const std::string& other_info);
-	std::string GetErrorString(cef_errorcode_t code);
-private:
 	IMPLEMENT_REFCOUNTING(PopupBrowserHandler);
 	DISALLOW_COPY_AND_ASSIGN(PopupBrowserHandler);
 };

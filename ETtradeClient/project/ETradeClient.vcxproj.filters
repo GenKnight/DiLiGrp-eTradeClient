@@ -165,6 +165,9 @@
     <ClInclude Include="ETradeClient\hardware\bank_card_reader.h">
       <Filter>Header Files\hardware</Filter>
     </ClInclude>
+    <ClInclude Include="ETradeClient\browser\error_page.h">
+      <Filter>Header Files\browser</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -262,6 +265,9 @@
     </ClCompile>
     <ClCompile Include="ETradeClient\hardware\bank_card_reader.cpp">
       <Filter>Source Files\hardware</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\browser\error_page.cpp">
+      <Filter>Source Files\browser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

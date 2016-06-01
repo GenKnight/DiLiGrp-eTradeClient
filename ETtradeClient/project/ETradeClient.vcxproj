@@ -105,6 +105,7 @@
     <ClInclude Include="ETradeClient\boost_patch\property_tree\json_parser_write.hpp" />
     <ClInclude Include="ETradeClient\browser\async_js_callback_handler.h" />
     <ClInclude Include="ETradeClient\browser\browser_app.h" />
+    <ClInclude Include="ETradeClient\browser\error_page.h" />
     <ClInclude Include="ETradeClient\browser\main_view_browser_handler.h" />
     <ClInclude Include="ETradeClient\browser\browser_util.h" />
     <ClInclude Include="ETradeClient\browser\embedded_browser.h" />
@@ -144,6 +145,7 @@
   <ItemGroup>
     <ClCompile Include="ETradeClient\browser\async_js_callback_handler.cpp" />
     <ClCompile Include="ETradeClient\browser\browser_app.cpp" />
+    <ClCompile Include="ETradeClient\browser\error_page.cpp" />
     <ClCompile Include="ETradeClient\browser\main_view_browser_handler.cpp" />
     <ClCompile Include="ETradeClient\browser\embedded_browser.cpp" />
     <ClCompile Include="ETradeClient\browser\render_delegate.cpp" />

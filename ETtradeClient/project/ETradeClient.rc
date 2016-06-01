@@ -17,7 +17,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Chinese (Simplified, PRC) resources
+// 中文(简体，中国) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
 LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
@@ -75,47 +75,50 @@ IDR_MAINFRAME           ICON                    "res\\ETradeClient.ico"
 // Menu
 //
 
-IDR_MAINFRAME MENUEX
+IDR_MAINFRAME MENU
 BEGIN
-    POPUP "文件(&F)",                         65535,MFT_STRING,MFS_ENABLED
+    POPUP "文件(&F)"
     BEGIN
-        MENUITEM "退出(&X)",                      ID_EXIT,MFT_STRING,MFS_ENABLED
+        MENUITEM "退出(&X)",                      ID_EXIT
     END
-    POPUP "编辑(&E)",                         65535,MFT_STRING,MFS_ENABLED
+    POPUP "编辑(&E)"
     BEGIN
-        MENUITEM "剪切(&T)\tCtrl+X",              ID_EDIT_CUT,MFT_STRING,MFS_ENABLED
-        MENUITEM "复制(&C)\tCtrl+C",              ID_EDIT_COPY,MFT_STRING,MFS_ENABLED
-        MENUITEM "粘贴(&P)\tCtrl+V",              ID_EDIT_PASTE,MFT_STRING,MFS_ENABLED
+        MENUITEM "剪切(&T)\tCtrl+X",              ID_EDIT_CUT
+        MENUITEM "复制(&C)\tCtrl+C",              ID_EDIT_COPY
+        MENUITEM "粘贴(&P)\tCtrl+V",              ID_EDIT_PASTE
     END
-    POPUP "业务办理(&B)",                       65535,MFT_STRING,MFS_ENABLED
+    POPUP "业务办理(&B)"
     BEGIN
-        MENUITEM "办理主卡",                        ID_ISSUE_MASTER_CARD,MFT_STRING | MFT_RIGHTJUSTIFY,MFS_ENABLED
-        MENUITEM "办理临时卡",                       ID_ISSUE_ANONYMOUS_CARD,MFT_STRING,MFS_ENABLED
-        MENUITEM "权限设置",                        ID_SET_CARD_AUTH,MFT_STRING,MFS_ENABLED
-        MENUITEM "卡片退卡",                        ID_RETURN_CARD,MFT_STRING,MFS_ENABLED
-        MENUITEM "更改密码",                        ID_MODIFY_CARD_PWD,MFT_STRING,MFS_ENABLED
-        MENUITEM "重置密码",                        ID_RESET_CARD_PWD,MFT_STRING,MFS_ENABLED
-        MENUITEM "卡片解锁",                        ID_UNLOCK_CARD,MFT_STRING,MFS_ENABLED
+        MENUITEM "办理主卡",                        ID_ISSUE_MASTER_CARD
+        MENUITEM "办理副卡",                        ID_ISSUE_SLAVE_CARD
+        MENUITEM "办理临时卡",                       ID_ISSUE_ANONYMOUS_CARD
+        MENUITEM "权限设置",                        ID_SET_CARD_AUTH
+        MENUITEM "卡片挂失",                        ID_FREEZE_CARD
+        MENUITEM "卡片解挂",                        ID_UNFREEZE_CARD
+        MENUITEM "卡片退卡",                        ID_RETURN_CARD
+        MENUITEM "更改密码",                        ID_MODIFY_CARD_PWD
+        MENUITEM "重置密码",                        ID_RESET_CARD_PWD
+        MENUITEM "卡片解锁",                        ID_UNLOCK_CARD
     END
-    POPUP "资金业务(&M)",                       65535,MFT_STRING,MFS_ENABLED
+    POPUP "资金业务(&M)"
     BEGIN
-        MENUITEM "充值",                          ID_CASH_RECHARGE,MFT_STRING,MFS_ENABLED
-        MENUITEM "提现",                          ID_CASH_WITHDRAW,MFT_STRING,MFS_ENABLED
-        MENUITEM "缴费",                          ID_FEE_PAYMENT,MFT_STRING,MFS_ENABLED
-        MENUITEM "结账申请",                        ID_SETTLE_ACCOUNTS_APPLY,MFT_STRING,MFS_ENABLED
+        MENUITEM "充值",                          ID_CASH_RECHARGE
+        MENUITEM "提现",                          ID_CASH_WITHDRAW
+        MENUITEM "缴费",                          ID_FEE_PAYMENT
+        MENUITEM "结账申请",                        ID_SETTLE_ACCOUNTS_APPLY
     END
-    POPUP "查询业务(&C)",                       65535,MFT_STRING,MFS_ENABLED
+    POPUP "查询业务(&C)"
     BEGIN
-        MENUITEM "客户查询",                        ID_CUSTOMER_QUERY,MFT_STRING,MFS_ENABLED
-        MENUITEM "操作记录",                        ID_OPER_LOG_QUERY,MFT_STRING,MFS_ENABLED
+        MENUITEM "客户查询",                        ID_CUSTOMER_QUERY
+        MENUITEM "操作记录",                        ID_OPER_LOG_QUERY
     END
-    POPUP "设置(&S)",                         65535,MFT_STRING,MFS_ENABLED
+    POPUP "设置(&S)"
     BEGIN
-        MENUITEM "修改配置",                        ID_MODIFY_CONFIG,MFT_STRING,MFS_ENABLED
+        MENUITEM "修改配置",                        ID_MODIFY_CONFIG
     END
-    POPUP "帮助(&H)",                         65535,MFT_STRING,MFS_ENABLED
+    POPUP "帮助(&H)"
     BEGIN
-        MENUITEM "关于 电子交易结算柜员系统(&A)...",        ID_APP_ABOUT,MFT_STRING,MFS_ENABLED
+        MENUITEM "关于 电子交易结算柜员系统(&A)...",        ID_APP_ABOUT
     END
 END
 
@@ -379,7 +382,7 @@ BEGIN
     AFX_IDS_SCTASKLIST      "激活任务列表"
 END
 
-#endif    // Chinese (Simplified, PRC) resources
+#endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

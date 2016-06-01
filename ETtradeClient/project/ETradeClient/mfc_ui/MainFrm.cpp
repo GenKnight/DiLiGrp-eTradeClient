@@ -58,10 +58,11 @@ namespace
 	static std::vector<TBBUTTON> kQuickAccessBtn =
 	{
 		{ 0, ID_ISSUE_MASTER_CARD, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
-		{ 1, ID_ISSUE_ANONYMOUS_CARD, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
-		{ 2, ID_CASH_RECHARGE, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
-		{ 3, ID_CASH_WITHDRAW, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
-		{ 4, ID_SETTLE_ACCOUNTS_APPLY, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 }
+		{ 1, ID_ISSUE_SLAVE_CARD, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
+		{ 2, ID_ISSUE_ANONYMOUS_CARD, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
+		{ 3, ID_CASH_RECHARGE, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
+		{ 4, ID_CASH_WITHDRAW, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
+		{ 5, ID_SETTLE_ACCOUNTS_APPLY, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 }
 	};
 } // namespace
 
@@ -433,11 +434,16 @@ bool CMainFrame::FilterQuickAccessToolBar()
 {
 	typedef MenuResAuthMgr::MenuItemsType MenuItemsT;
 	const auto& menu_items = m_menu_res_auth_manager.MenuItems();
+	int index = 0;
 	for (auto iter = kQuickAccessBtn.begin(); iter != kQuickAccessBtn.end();)
 	{
 		MenuItemsT::const_iterator cit = menu_items.find(iter->idCommand);
 		if (cit != menu_items.cend() && cit->second.is_authorized) // If found and authorized.
+		{ 
+			iter->iBitmap = index;// modify the icon index mapping.
+			index++;
 			++iter;
+		}	
 		else // If not found or unauthorized.
 			iter = kQuickAccessBtn.erase(iter);
 	}

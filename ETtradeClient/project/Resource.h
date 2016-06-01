@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by ETradeClient.rc
+// Microsoft Visual C++ 生成的包含文件。
+// 供 ETradeClient.rc 使用
 //
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
@@ -32,6 +32,8 @@
 #define ID_ISSUE_SLAVE_CARD             50010
 #define ID_ISSUE_ANONYMOUS_CARD         50020
 #define ID_SET_CARD_AUTH                50030
+#define ID_FREEZE_CARD                  50033
+#define ID_UNFREEZE_CARD                50037
 #define ID_REPORT_CARD_LOSS             50040
 #define ID_RESTORE_CARD_LOSS            50050
 #define ID_CHANGE_CARD                  50060
@@ -53,7 +55,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        325
-#define _APS_NEXT_COMMAND_VALUE         32808
+#define _APS_NEXT_COMMAND_VALUE         32812
 #define _APS_NEXT_CONTROL_VALUE         1014
 #define _APS_NEXT_SYMED_VALUE           311
 #endif

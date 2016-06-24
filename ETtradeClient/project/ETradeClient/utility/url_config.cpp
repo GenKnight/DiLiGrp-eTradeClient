@@ -61,6 +61,7 @@ URLConfig::URLConfig()
 		m_user_msg_count_path = ptree.get<std::string>("user_msg_count_path");
 		m_user_msg_path = ptree.get<std::string>("user_msg_path");
 		m_modify_pwd_path = ptree.get<std::string>("modify_pwd_path");
+		m_create_merchant_path = ptree.get<std::string>("create_merchant_path");
 	}
 	catch (...) // Catch the exception in order for logging.
 	{
@@ -91,6 +92,7 @@ void URLConfig::ModifyCfg(bool is_https, uint16_t port)
 		root.put("user_msg_count_path", m_user_msg_count_path);
 		root.put("user_msg_path", m_user_msg_path);
 		root.put("modify_pwd_path", m_modify_pwd_path);
+		root.put("create_merchant_path", m_create_merchant_path);
 		PT::write_json(ss, root, true);
 	}
 	catch (...) // Catch the exception in order for logging.
@@ -166,4 +168,9 @@ std::string URLConfig::UserMsgPath() const
 std::string URLConfig::PwdModificationPath() const
 {
 	return m_modify_pwd_path;
+}
+
+std::string URLConfig::CreateMerchantPath() const
+{
+	return m_create_merchant_path;
 }

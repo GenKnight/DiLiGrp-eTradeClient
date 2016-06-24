@@ -15,6 +15,7 @@
 #include "etradeclient/browser/embedded_browser.h"
 #include "etradeclient/utility/logging.h"
 #include "etradeclient/utility/string_converter.h"
+#include "etradeclient/utility/session.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -141,8 +142,8 @@ BOOL CETradeClientApp::InitInstance()
 	// such as the name of your company or organization
 	SetRegistryKey(APP_ID);
 
-	// First, do login job.
-	if (!CLoginDialog(L"欢迎使用地利电子交易结算柜员系统！").Launch())
+	//First, do login job.
+	if (!CLoginDialog(L"欢迎使用地利集团商户服务系统！").Launch())
 	{
 		LOG_TRACE(L"登录系统未完成，程序关闭。");
 		return FALSE;
@@ -171,6 +172,12 @@ BOOL CETradeClientApp::InitInstance()
 	main_frm->ShowWindow(SW_SHOWMAXIMIZED);
 	main_frm->UpdateWindow();
 
+	if (Session::Instance().IsFirstLogin())
+	{
+		main_frm->DoCreatMerchant();
+		LOG_TRACE(L"完成创建商户操作后，主窗口将退出，程序将关闭。");
+	}
+
 	return TRUE;
 }
 
@@ -188,6 +195,10 @@ int CETradeClientApp::ExitInstance()
 
 	AfxOleTerm(FALSE);
 	m_instance_mgr.Unregister();
+
+	if (Session::Instance().IsFirstLogin())
+		ReLaunch();
+
 	return CWinApp::ExitInstance();
 }
 
@@ -275,6 +286,24 @@ void CETradeClientApp::OnAppAbout()
 {
 	CAboutDlg aboutDlg;
 	aboutDlg.DoModal();
+}
+
+void CETradeClientApp::ReLaunch()
+{
+	WCHAR szPath[128];
+	GetModuleFileName(AfxGetApp()->m_hInstance, szPath, sizeof(szPath));
+
+	STARTUPINFO startup_info;
+	PROCESS_INFORMATION proc_info;
+	memset(&startup_info, 0, sizeof(STARTUPINFO));
+	startup_info.cb = sizeof(STARTUPINFO);
+
+	BOOL bSucc = CreateProcess(szPath, NULL, NULL, NULL,
+		FALSE, NORMAL_PRIORITY_CLASS, NULL, NULL, &startup_info, &proc_info);
+	if (bSucc)
+		LOG_TRACE(L"客户端已经重启。。。");
+	else
+		LOG_ERROR(L"客户端重启失败！！！");
 }
 
 // CETradeClientApp message handlers

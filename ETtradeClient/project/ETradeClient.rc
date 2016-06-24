@@ -17,7 +17,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Chinese (Simplified, PRC) resources
+// 中文(简体，中国) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
 LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
@@ -75,47 +75,55 @@ IDR_MAINFRAME           ICON                    "res\\ETradeClient.ico"
 // Menu
 //
 
-IDR_MAINFRAME MENUEX
+IDR_MAINFRAME MENU
 BEGIN
-    POPUP "文件(&F)",                         65535,MFT_STRING,MFS_ENABLED
+    POPUP "文件(&F)"
     BEGIN
-        MENUITEM "退出(&X)",                      ID_EXIT,MFT_STRING,MFS_ENABLED
+        MENUITEM "退出(&X)",                      ID_EXIT
     END
-    POPUP "编辑(&E)",                         65535,MFT_STRING,MFS_ENABLED
+    POPUP "编辑(&E)"
     BEGIN
-        MENUITEM "剪切(&T)\tCtrl+X",              ID_EDIT_CUT,MFT_STRING,MFS_ENABLED
-        MENUITEM "复制(&C)\tCtrl+C",              ID_EDIT_COPY,MFT_STRING,MFS_ENABLED
-        MENUITEM "粘贴(&P)\tCtrl+V",              ID_EDIT_PASTE,MFT_STRING,MFS_ENABLED
+        MENUITEM "剪切(&T)\tCtrl+X",              ID_EDIT_CUT
+        MENUITEM "复制(&C)\tCtrl+C",              ID_EDIT_COPY
+        MENUITEM "粘贴(&P)\tCtrl+V",              ID_EDIT_PASTE
     END
-    POPUP "业务办理(&B)",                       65535,MFT_STRING,MFS_ENABLED
+    POPUP "交易管理(&D)"
     BEGIN
-        MENUITEM "办理主卡",                        ID_ISSUE_MASTER_CARD,MFT_STRING | MFT_RIGHTJUSTIFY,MFS_ENABLED
-        MENUITEM "办理临时卡",                       ID_ISSUE_ANONYMOUS_CARD,MFT_STRING,MFS_ENABLED
-        MENUITEM "权限设置",                        ID_SET_CARD_AUTH,MFT_STRING,MFS_ENABLED
-        MENUITEM "卡片退卡",                        ID_RETURN_CARD,MFT_STRING,MFS_ENABLED
-        MENUITEM "更改密码",                        ID_MODIFY_CARD_PWD,MFT_STRING,MFS_ENABLED
-        MENUITEM "重置密码",                        ID_RESET_CARD_PWD,MFT_STRING,MFS_ENABLED
-        MENUITEM "卡片解锁",                        ID_UNLOCK_CARD,MFT_STRING,MFS_ENABLED
+        MENUITEM "结算收款",                        ID_SETTLE_PAY
+        MENUITEM "结算单查询",                       ID_QUERY_STATEMENTS
+        MENUITEM "订单查询",                        ID_QUERY_ORDERS
+        MENUITEM "商品销状",                        ID_GOOD_SALEROOM
     END
-    POPUP "资金业务(&M)",                       65535,MFT_STRING,MFS_ENABLED
+    POPUP "商品管理(&G)"
     BEGIN
-        MENUITEM "充值",                          ID_CASH_RECHARGE,MFT_STRING,MFS_ENABLED
-        MENUITEM "提现",                          ID_CASH_WITHDRAW,MFT_STRING,MFS_ENABLED
-        MENUITEM "缴费",                          ID_FEE_PAYMENT,MFT_STRING,MFS_ENABLED
-        MENUITEM "结账申请",                        ID_SETTLE_ACCOUNTS_APPLY,MFT_STRING,MFS_ENABLED
+        MENUITEM "商品入库",                        ID_GOOD_STORAGE
+        MENUITEM "分发管理",                        ID_DISTRIBUTE_MANAGE_FINANCE
+        MENUITEM "分发查询",                        ID_DISTRIBUTE_QUERY
+        MENUITEM "分发管理",                        ID_DISTRIBUTE_MANAGE_STORE_MANAGER
+        MENUITEM "调拨管理",                        ID_ALLOT_MANAGE
+        MENUITEM "报损管理",                        ID_BREAKAGE_MANAGE
     END
-    POPUP "查询业务(&C)",                       65535,MFT_STRING,MFS_ENABLED
+    POPUP "赊销管理(&T)"
     BEGIN
-        MENUITEM "客户查询",                        ID_CUSTOMER_QUERY,MFT_STRING,MFS_ENABLED
-        MENUITEM "操作记录",                        ID_OPER_LOG_QUERY,MFT_STRING,MFS_ENABLED
+        MENUITEM "赊销白名单",                       ID_CREDIT_SALE_WHITE_LIST
+        MENUITEM "赊销回款",                        ID_CREDIT_SALE_PAY
     END
-    POPUP "设置(&S)",                         65535,MFT_STRING,MFS_ENABLED
+    POPUP "系统设置(&M)"
     BEGIN
-        MENUITEM "修改配置",                        ID_MODIFY_CONFIG,MFT_STRING,MFS_ENABLED
+        MENUITEM "结算管理",                        ID_SETTLE_MANAGE
+        MENUITEM "店铺管理",                        ID_STORE_MANAGE
+        MENUITEM "担保管理",                        ID_GUARANTEE_MANAGE
+        MENUITEM "角色管理",                        ID_ROLE_MANAGE
+        MENUITEM "用户管理",                        ID_USER_MANAGE
     END
-    POPUP "帮助(&H)",                         65535,MFT_STRING,MFS_ENABLED
+    POPUP "日综盘点(&P)"
     BEGIN
-        MENUITEM "关于 电子交易结算柜员系统(&A)...",        ID_APP_ABOUT,MFT_STRING,MFS_ENABLED
+        MENUITEM "库存盘点",                        ID_STORAGE_CHECK
+        MENUITEM "盘点记录",                        ID_CHECK_RECORD
+    END
+    POPUP "帮助(&H)"
+    BEGIN
+        MENUITEM "关于 地利集团商户服务系统(&A)...",        ID_APP_ABOUT
     END
 END
 
@@ -144,7 +152,7 @@ BEGIN
     VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
     VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
     "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
-    VK_F1,          ID_ISSUE_MASTER_CARD,   VIRTKEY, CONTROL, NOINVERT
+    VK_F1,          ID_SETTLE_PAY,          VIRTKEY, CONTROL, NOINVERT
     VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
     VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
 END
@@ -157,11 +165,11 @@ END
 
 IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "关于 电子交易结算柜员系统"
+CAPTION "关于 地利集团商户服务系统"
 FONT 9, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,14,14,20,20
-    LTEXT           "电子交易结算柜员系统，1.0 版",IDC_STATIC,42,14,114,8,SS_NOPREFIX
+    LTEXT           "地利集团商户服务系统，1.0 版",IDC_STATIC,42,14,114,8,SS_NOPREFIX
     LTEXT           "Copyright (C) 2016",IDC_STATIC,42,26,114,8
     DEFPUSHBUTTON   "确定",IDOK,99,41,50,14,WS_GROUP
 END
@@ -173,6 +181,7 @@ BEGIN
     EDITTEXT        IDC_ACCOUNT_EDIT,185,26,166,27,ES_AUTOHSCROLL
     EDITTEXT        IDC_PWD_EDIT,185,70,166,27,ES_AUTOHSCROLL
     LTEXT           "",IDC_LOGIN_ERR_MSG,185,100,166,27
+    RTEXT           "点击此处，以卡账号登录。",IDC_STATIC_LOGIN_TYPE,211,151,148,12,SS_NOTIFY
 END
 
 IDD_POPUP_BROWSER_VIEW DIALOGEX 0, 0, 309, 176
@@ -237,12 +246,12 @@ BEGIN
         BLOCK "080404b0"
         BEGIN
             VALUE "CompanyName", "地利集团【DILI GROUP】"
-            VALUE "FileDescription", "电子交易结算柜员系统【ETradeClient】"
+            VALUE "FileDescription", "地利集团商户服务系统【ETradeClient】"
             VALUE "FileVersion", "1.0.0.1"
             VALUE "InternalName", "ETradeClient.exe"
             VALUE "LegalCopyright", "(C) 地利集团。  保留所有权利。"
             VALUE "OriginalFilename", "ETradeClient.exe"
-            VALUE "ProductName", "电子交易结算柜员系统"
+            VALUE "ProductName", "地利集团商户服务系统"
             VALUE "ProductVersion", "1.0.0.1"
         END
     END
@@ -379,7 +388,7 @@ BEGIN
     AFX_IDS_SCTASKLIST      "激活任务列表"
 END
 
-#endif    // Chinese (Simplified, PRC) resources
+#endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

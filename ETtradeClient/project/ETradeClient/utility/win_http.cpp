@@ -111,6 +111,7 @@ WinHttp::Request::Request(Request&& rhs)
 	m_request = std::move(rhs.m_request);
 	rhs.m_request = NULL;
 	m_method = rhs.m_method;
+	m_content_type = std::move(rhs.m_content_type);
 	m_post_data = std::move(rhs.m_post_data);
 }
 
@@ -121,6 +122,7 @@ WinHttp::Request& WinHttp::Request::operator=(Request&& rhs)
 		m_request = std::move(rhs.m_request);
 		rhs.m_request = NULL;
 		m_method = rhs.m_method;
+		m_content_type = std::move(rhs.m_content_type);
 		m_post_data = std::move(rhs.m_post_data);
 	}
 	return *this;
@@ -180,6 +182,11 @@ void WinHttp::Request::SetClientCertificate(const std::string& cert_store_name, 
 		std::string err_msg("打开认证存储区域失败！错误代码：" + std::to_string(GetLastError()));
 		throw std::exception(err_msg.c_str());
 	}
+}
+
+void WinHttp::Request::SetContentType(std::string content_type)
+{
+	m_content_type = content_type;
 }
 
 void WinHttp::Request::SetPostData(const std::string& post_data)
@@ -284,7 +291,8 @@ void WinHttp::Request::Post()
 {
 	// Send a request.
 	if (!WinHttpSendRequest(m_request,
-		L"Content-Type: application/x-www-form-urlencoded; charset=UTF-8", // headers.
+		//L"Content-Type: application/x-www-form-urlencoded; charset=UTF-8", // headers.
+		str_2_wstr(m_content_type).c_str(),
 		-1,
 		const_cast<char*>(m_post_data.c_str()),
 		m_post_data.size(),

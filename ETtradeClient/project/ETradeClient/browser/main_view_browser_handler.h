@@ -169,8 +169,6 @@ private:
 	// Returns the full download path for the specified file, or an empty path to use the default temp directory.
 	std::string GetDownloadPath(const std::string& file_name);
 	void SendStatusToMainWnd(CefRefPtr<CefBrowser> browser, const std::wstring& status);
-	void LoadErrorPage(CefRefPtr<CefFrame> frame, const std::string& failed_url, cef_errorcode_t error_code, const std::string& other_info);
-	std::string GetErrorString(cef_errorcode_t code);
 private:
 	CefRefPtr<CefMessageRouterBrowserSide>	m_browser_msg_router; // Handles the browser side of query routing.
 	MessageHandlerSet						m_msg_handlers; // Hold all the browser side message handers.

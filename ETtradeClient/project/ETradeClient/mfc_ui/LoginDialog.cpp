@@ -11,10 +11,16 @@
 #include <boost/filesystem.hpp>
 #include <boost/property_tree/ptree.hpp>
 
+
 #include "etradeclient/boost_patch/property_tree/json_parser.hpp" // WARNIING! Make sure to include our patched version.
+
+#include "etradeclient/utility/logon_mgr.h"
+
 #include "etradeclient/utility/url_config.h"
 #include "etradeclient/utility/application_config.h"
-#include "etradeclient/browser/session.h"
+
+
+#include "etradeclient/utility/session.h"
 #include "etradeclient/browser/embedded_browser.h"
 #include "etradeclient/utility/string_converter.h"
 #include "etradeclient/utility/win_http.h"
@@ -24,90 +30,8 @@
 
 namespace
 {
-	// Tag & value of the log in response JSON string.
-	static const std::string JSON_TAG_CODE = "code";
-	static const std::string JSON_TAG_MSG = "message";
-	static const std::string JSON_VAL_SUCC = "success";
-
-	class LoginProxy
-	{
-	public:
-		LoginProxy() : m_err_msg(L"")
-		{}
-
-		bool DoLogin(const std::wstring& account, const std::wstring& pwd)
-		{
-			const uint32_t kHTTPOK = 200;
-			m_err_msg = L"";
-
-			auto& url_cfg = URLConfig::Instance();
-			try
-			{
-				WinHttp win_http;
-				win_http.ConnectHost(url_cfg.Host(), url_cfg.Port(), url_cfg.IsHttps());
-				auto& request = win_http.OpenRequest(WinHttp::Method::POST, url_cfg.LoginPath());
-				request.SetPostData("{\"account\":\"" + wstr_2_str(account) + "\"," + "\"password\":\"" + wstr_2_str(pwd) + "\"}");
-				if (url_cfg.IsHttps())
-				{
-					auto& app_cfg = ApplicationConfig::Instance();
-					request.SetClientCertificate(app_cfg.ClientCertStore(), app_cfg.ClientCertSubject());
-				}
-				request.Send();
-				uint32_t status_code = request.GetResponseStatus();
-				if (kHTTPOK != status_code)
-				{
-					m_err_msg = L"网络请求错误！ 错误码: " + std::to_wstring(status_code);
-					return false;
-				}
-				std::string response_body = request.ReadResponseBody();
-				if (response_body.empty())
-				{
-					m_err_msg = L"获取服务器响应数据失败，请确保网络连接正常！";
-					return false;
-				}
-				if (!GetLoginResult(response_body)) // If log in failed.
-					return false;
-				Session::Instance().SetCookies(request.GetCookies()); // If log in succeeds, keep the cookies in session.
-			}
-			catch (std::exception& ex)
-			{
-				LOG_ERROR(gbk_2_wstr(ex.what()));
-				m_err_msg = L"发送登录请求失败，请确保网络连接正常！";
-				return false;
-			}
-			return true;
-		}
-
-		const std::wstring& ErrorMsg() const
-		{
-			return m_err_msg;
-		}
-	private:
-		bool GetLoginResult(const std::string& response_str) //Parse the response string which is a JSON string.
-		{
-			namespace PT = boost::property_tree;
-			bool login_res = false;
-			try //Parse the configuration file
-			{
-				PT::ptree ptree;
-				std::stringstream ss;
-				ss << response_str;
-				PT::read_json(ss, ptree);
-				std::string res = ptree.get<std::string>(JSON_TAG_CODE);
-				login_res = res.compare(JSON_VAL_SUCC) == 0 ? true : false;
-				if (!login_res)
-					m_err_msg = str_2_wstr(ptree.get<std::string>(JSON_TAG_MSG));
-			}
-			catch (...)
-			{
-				LOG_ERROR(L"解析服务器返回的登录结果信息时出错！请确认返回数据不为空，返回的数据格式为正确的Json格式！");
-				return false;
-			}
-			return login_res;
-		}
-	private:
-		std::wstring m_err_msg;
-	};
+	static const std::string LOGIN_TYPE_USER_NAME = "user_name";
+	static const std::string LOGIN_TYPE_ACCOUNT_NO = "account_no";
 }
 
 // CLoginDialog dialog
@@ -119,10 +43,11 @@ BEGIN_MESSAGE_MAP(CLoginDialog, CDialogEx)
 	ON_BN_CLICKED(IDOK, &CLoginDialog::OnLoginBtnClicked)
 	ON_WM_CTLCOLOR()
 	ON_WM_SYSCOMMAND()
+	ON_STN_CLICKED(IDC_STATIC_LOGIN_TYPE, &CLoginDialog::OnStnClickedStaticLoginType)
 END_MESSAGE_MAP()
 
 CLoginDialog::CLoginDialog(const std::wstring& title, CWnd* pParent)
-	: CDialogEx(CLoginDialog::IDD, pParent), m_title(title), m_account_edit(L"用户名"), m_pwd_edit(L"密码", true)
+	: CDialogEx(CLoginDialog::IDD, pParent), m_title(title), m_login_type(USER_NAME), m_account_edit(L"用户名"), m_pwd_edit(L"密码", true)
 {}
 
 CLoginDialog::~CLoginDialog()
@@ -141,6 +66,7 @@ void CLoginDialog::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_ACCOUNT_EDIT, m_account_edit);
 	DDX_Control(pDX, IDC_PWD_EDIT, m_pwd_edit);
 	DDX_Control(pDX, IDC_LOGIN_ERR_MSG, m_login_err_msg_text);
+	DDX_Control(pDX, IDC_STATIC_LOGIN_TYPE, m_login_type_text);
 }
 
 // CLoginDialog message handlers
@@ -176,6 +102,8 @@ BOOL CLoginDialog::OnInitDialog()
 	else
 		m_login_btn.SetFocus();
 
+	//Invalidate(TRUE);// 重绘界面，解决界面控件显示不全的问题
+	SwitchToThisWindow(GetSafeHwnd(), TRUE);
 	return false;  // return TRUE unless you set the focus to a control
 }
 
@@ -189,7 +117,8 @@ void CLoginDialog::OnPaint()
 	CRect client_rect;
 	GetClientRect(&client_rect);
 	SetStretchBltMode(dc, STRETCH_HALFTONE);
-	dc.StretchBlt(0, 0, client_rect.Width(), client_rect.Height(), &mem_dc, 0, 0, m_bg_img.GetWidth(), m_bg_img.GetHeight(), SRCCOPY);
+	dc.StretchBlt(0, 0, client_rect.Width(), client_rect.Height(), &mem_dc, 
+		0, 0, m_bg_img.GetWidth(), m_bg_img.GetHeight(), SRCCOPY);
 }
 
 void CLoginDialog::OnLoginBtnClicked()
@@ -207,11 +136,12 @@ void CLoginDialog::OnLoginBtnClicked()
 		return;
 	}
 
-	LoginProxy login_proxy ;
-	if (!login_proxy.DoLogin(std::wstring(account), std::wstring(pwd))) // If log in failed.
+	LogonMgr& logon_mgr = LogonMgr::Instance();
+	if (!logon_mgr.DoLogin(std::wstring(account), std::wstring(pwd), 
+		USER_NAME == m_login_type ? LOGIN_TYPE_USER_NAME : LOGIN_TYPE_ACCOUNT_NO)) // If log in failed.
 	{
-		m_login_err_msg_text.SetWindowTextW(login_proxy.ErrorMsg().c_str());
-		LOG_ERROR(L"登录系统失败: " + login_proxy.ErrorMsg() + L"!");
+		m_login_err_msg_text.SetWindowTextW(logon_mgr.ErrorMsg().c_str());
+		LOG_ERROR(L"登录系统失败: " + logon_mgr.ErrorMsg() + L"!");
 		return;
 	}
 	LOG_TRACE(L"登录系统成功。");
@@ -275,8 +205,8 @@ void CLoginDialog::OnSysCommand(UINT nID, LPARAM lParam)
 
 void CLoginDialog::SetSubCtrlLayout()
 {
-	const int kSubCtrlWidth = 300, kSubCtrlHeight = 45, kErrMsgHeight = 20;
-	const int kIntervalAccountPwd = 20, kIntervalPwdErrMsg = 10, kIntervalErrMsgOkBtn = 15;
+	const int kSubCtrlWidth = 300, kSubCtrlHeight = 45, kErrMsgHeight = 20, kLoginTypeTextHeight = 20;
+	const int kIntervalAccountPwd = 20, kIntervalPwdErrMsg = 10, kIntervalErrMsgOkBtn = 15, kIntervalOkBtnTypeText = 20;
 	const int kSubCtrlPosX = 840;
 	int kSubCtrlPosY = 185;
 
@@ -287,6 +217,8 @@ void CLoginDialog::SetSubCtrlLayout()
 	m_login_err_msg_text.MoveWindow(kSubCtrlPosX, kSubCtrlPosY, kSubCtrlWidth, kErrMsgHeight);
 	kSubCtrlPosY += kErrMsgHeight + kIntervalErrMsgOkBtn;
 	m_login_btn.MoveWindow(kSubCtrlPosX, kSubCtrlPosY, kSubCtrlWidth, kSubCtrlHeight);
+	kSubCtrlPosY += kSubCtrlHeight + kIntervalOkBtnTypeText;
+	m_login_type_text.MoveWindow(kSubCtrlPosX, +kSubCtrlPosY, kSubCtrlWidth, kLoginTypeTextHeight);
 }
 
 void CLoginDialog::SetSubCtrlStyle()
@@ -422,4 +354,30 @@ void CLoginDialog::LoginBtn::DrawButtonText(CDC* dc, CRect rc, CString caption, 
 	text_rect.bottom = kVerticalStartPos + text_size.cy;
 
 	dc->DrawText(caption, caption.GetLength(), text_rect, kDrawStyles);
+}
+
+void CLoginDialog::OnStnClickedStaticLoginType()
+{
+	CRect rect_type;
+	m_login_type_text.GetWindowRect(rect_type);
+	ScreenToClient(&rect_type);
+	InvalidateRect(&rect_type); // Refresh error message text rect when next time get "WM_PAINT" event.
+
+	CRect rect_acc;
+	m_account_edit.GetWindowRect(rect_acc);
+	ScreenToClient(&rect_acc);
+	InvalidateRect(&rect_acc); // Refresh error message text rect when next time get "WM_PAINT" event.
+
+	if (USER_NAME == m_login_type)
+	{
+		m_login_type = CARD_NO;
+		m_login_type_text.SetWindowTextW(L"点击此处，以用户名登录。");
+		m_account_edit.SetDefaultText(L"卡账号");
+	}
+	else if (CARD_NO == m_login_type)
+	{
+		m_login_type = USER_NAME;
+		m_login_type_text.SetWindowTextW(L"点击此处，以卡账号登录。");
+		m_account_edit.SetDefaultText(L"用户名");
+	}
 }

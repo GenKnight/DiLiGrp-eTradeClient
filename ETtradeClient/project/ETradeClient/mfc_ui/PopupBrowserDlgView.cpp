@@ -4,7 +4,8 @@
 #include "etradeclient/mfc_ui/LoginDialog.h"
 
 #include "etradeclient/browser/popup_browser_handler.h"
-#include "etradeclient/browser/session.h"
+#include "etradeclient/utility/session.h"
+#include "etradeclient/utility/logon_mgr.h"
 #include "etradeclient/utility/logging.h"
 #include "etradeclient/utility/url_config.h"
 #include "etradeclient/utility/win_msg_define.h"
@@ -119,7 +120,7 @@ void CPopupBrowserView::OnClose()
 	if (m_browser.CEFBrowserAttached())
 	{
 		m_browser.Close();
-		return;
+		return;// Browser会再次触发该接口
 	}
 	CDialog::OnClose();
 }
@@ -152,4 +153,45 @@ std::string CModifyPwdView::URL() const
 {
 	auto& url_cfg = URLConfig::Instance();
 	return url_cfg.FullHost() + url_cfg.PwdModificationPath();
+}
+
+CCreateMerchantView::CCreateMerchantView(const RECT& main_wnd_rect, CWnd* pParent /*= NULL*/) : CPopupBrowserView(main_wnd_rect, pParent)
+{
+	const int kWndWidth = 770, kHorizontalMargin = 20, kWndHeight = 350, kVerticalMargin = 40;
+	const int kCenterX = m_rect.left + (m_rect.right - m_rect.left) / 2, kCenterY = m_rect.top + (m_rect.bottom - m_rect.top) / 2;
+	m_rect.left = kCenterX - (kWndWidth + kHorizontalMargin) / 2;
+	m_rect.right = kCenterX + (kWndWidth + kHorizontalMargin) / 2;
+	m_rect.top = kCenterY - (kWndHeight + kVerticalMargin) / 2;
+	m_rect.bottom = kCenterY + (kWndHeight + kVerticalMargin) / 2;
+}
+
+std::string CCreateMerchantView::URL() const
+{
+#if 1
+	auto& url_cfg = URLConfig::Instance();
+	return url_cfg.FullHost() + url_cfg.CreateMerchantPath();
+#else
+	return "D:\\ApplicationWorkspace\\VisualStudio2013\\ETtradeClient\\hardware_test_html\\async_js_callbak_handler_test.html";
+#endif
+
+}
+BEGIN_MESSAGE_MAP(CCreateMerchantView, CPopupBrowserView)
+	ON_WM_CLOSE()
+END_MESSAGE_MAP()
+
+void CCreateMerchantView::OnClose()
+{
+	CPopupBrowserView::OnClose();
+
+	if (!LogonMgr::Instance().DoLogout())
+		LOG_ERROR(L"创建商户操作完成后，服务端退出请求处理失败。");
+	else
+		LOG_TRACE(L"退出系统成功。");
+
+	Session::Instance().OnExpired();// 不让主窗口关闭的时候，再去提示用户是否退出以及做退出后台系统处理。
+	
+	// AfxGetMainWnd() will return NULL if called from an other thread (has to do with thread local storage).
+	// That's why we use AfxGetApp()->GetMainWnd() instead of AfxGetMainWnd().
+	HWND hwnd = AfxGetApp()->GetMainWnd()->GetSafeHwnd();
+	::PostMessage(hwnd, WM_CLOSE, NULL, NULL);
 }

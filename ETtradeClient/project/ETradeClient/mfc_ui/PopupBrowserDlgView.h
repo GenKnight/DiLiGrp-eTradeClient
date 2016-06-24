@@ -18,6 +18,9 @@ public:
 	explicit CPopupBrowserView(const RECT& main_wnd_rect, CWnd* pParent = NULL);
 	virtual ~CPopupBrowserView();
 
+public:
+	afx_msg virtual void OnClose();
+
 private:
 	virtual std::string URL() const = 0;
 
@@ -32,7 +35,6 @@ private:
 	afx_msg LRESULT OnSessionExpired(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnTitleChange(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnLoadEnd(WPARAM wParam, LPARAM lParam);
-	afx_msg void OnClose();
 
 	DECLARE_MESSAGE_MAP()
 protected:
@@ -56,4 +58,15 @@ public:
 	explicit CModifyPwdView(const RECT& main_wnd_rect, CWnd* pParent = NULL);
 private:
 	std::string URL() const;
+};
+
+class CCreateMerchantView : public CPopupBrowserView
+{
+public:
+	explicit CCreateMerchantView(const RECT& main_wnd_rect, CWnd* pParent = NULL);
+private:
+	std::string URL() const;
+public:
+	DECLARE_MESSAGE_MAP()
+	afx_msg void OnClose();
 };

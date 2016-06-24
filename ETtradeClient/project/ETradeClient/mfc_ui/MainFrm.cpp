@@ -16,12 +16,12 @@
 #include <boost/property_tree/ptree.hpp>
 
 #include "etradeclient/boost_patch/property_tree/json_parser.hpp" // WARNIING! Make sure to include our patched version.
-#include "etradeclient/mfc_ui/ETradeClient.h"
 #include "etradeclient/mfc_ui/LoginDialog.h"
 #include "etradeclient/mfc_ui/PopupBrowserDlgView.h"
 #include "etradeclient/mfc_ui/ConfigDialog.h"
 
-#include "etradeclient/browser/session.h"
+#include "etradeclient/utility/session.h"
+#include "etradeclient/utility/logon_mgr.h"
 #include "etradeclient/browser/browser_util.h"
 #include "etradeclient/utility/logging.h"
 #include "etradeclient/utility/application_config.h"
@@ -57,11 +57,10 @@ namespace
 
 	static std::vector<TBBUTTON> kQuickAccessBtn =
 	{
-		{ 0, ID_ISSUE_MASTER_CARD, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
-		{ 1, ID_ISSUE_ANONYMOUS_CARD, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
-		{ 2, ID_CASH_RECHARGE, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
-		{ 3, ID_CASH_WITHDRAW, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
-		{ 4, ID_SETTLE_ACCOUNTS_APPLY, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 }
+		{ 0, ID_SETTLE_PAY, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
+		{ 1, ID_GOOD_STORAGE, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
+		{ 2, ID_DISTRIBUTE_MANAGE_FINANCE, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 },
+		{ 3, ID_CREDIT_SALE_PAY, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0 }
 	};
 } // namespace
 
@@ -83,11 +82,12 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_COMMAND(ID_MODIFY_CONFIG, OnModifyConfig)
 	ON_UPDATE_COMMAND_UI(USER_MESSAGE, &CMainFrame::OnUpdateToolBarMsgCount)
 
-	ON_COMMAND_RANGE(ID_ISSUE_MASTER_CARD, ID_OPER_LOG_QUERY, OnMenuBtnClicked)
+	ON_COMMAND_RANGE(ID_SETTLE_PAY, ID_CHECK_RECORD, OnMenuBtnClicked)
 	ON_COMMAND_RANGE(RELOAD, USER_ACCOUNT, OnToolBarBtnClicked)
 	
 	ON_MESSAGE(WM_CEF_SESSION_EXPIRED, OnSessionExpired)
 	ON_MESSAGE(WM_UPDATE_USER_MSG_COUNT,OnGotMsgCount)
+	ON_WM_GETMINMAXINFO()
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -116,7 +116,7 @@ bool CMainFrame::Launch()
 	}
 	LOG_ERROR(L"创建浏览器失败！");// Create main browser failed!
 
-	if (!LogOut())
+	if (!LogonMgr::Instance().DoLogout())
 		LOG_ERROR(L"服务端退出请求处理失败。");
 	else
 		LOG_TRACE(L"退出系统成功。");
@@ -127,6 +127,15 @@ bool CMainFrame::Launch()
 void CMainFrame::UpdateStatus(LPCTSTR status)
 {
 	m_status_bar.SetPaneText(0, status);
+}
+
+void CMainFrame::DoCreatMerchant()
+{
+	m_user_msg_monitor.Stop(); // Stop monitoring before launching the password modification dialog.
+	RECT rect;
+	GetWindowRect(&rect);
+	CCreateMerchantView(rect).DoModal();
+	//m_user_msg_monitor.Start(); // Recover monitoring.
 }
 
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
@@ -177,10 +186,13 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 			break;
 		if (!m_menu_res_auth_manager.UpdateAuth())
 			break;
-		if (!FilterMenuBar())
-			break;
-		if (!FilterQuickAccessToolBar())
-			break;
+		if (!Session::Instance().IsFirstLogin())
+		{
+			if (!FilterMenuBar())
+				break;
+			if (!FilterQuickAccessToolBar())
+				break;
+		}
 		if (!CreateMainFrmUI())
 			break;
 		return 0; // Return 0 if all succeed.
@@ -196,7 +208,7 @@ void CMainFrame::OnClose()
 		{
 			if (IDNO == MessageBox(L"您确定要退出并关闭程序吗？", L"退出系统提示！", MB_YESNO | MB_ICONEXCLAMATION))
 				return;
-			if (!LogOut())
+			if (!LogonMgr::Instance().DoLogout())
 			{
 				MessageBox(L"退出系统失败，若无法重新登录请联系维护人员！", L"退出系统提示！", MB_OK | MB_ICONWARNING);
 				LOG_ERROR(L"服务端退出请求处理失败。程序关闭。");
@@ -433,11 +445,16 @@ bool CMainFrame::FilterQuickAccessToolBar()
 {
 	typedef MenuResAuthMgr::MenuItemsType MenuItemsT;
 	const auto& menu_items = m_menu_res_auth_manager.MenuItems();
+	int index = 0;
 	for (auto iter = kQuickAccessBtn.begin(); iter != kQuickAccessBtn.end();)
 	{
 		MenuItemsT::const_iterator cit = menu_items.find(iter->idCommand);
 		if (cit != menu_items.cend() && cit->second.is_authorized) // If found and authorized.
+		{ 
+			iter->iBitmap = index;// modify the icon index mapping.
+			index++;
 			++iter;
+		}	
 		else // If not found or unauthorized.
 			iter = kQuickAccessBtn.erase(iter);
 	}
@@ -665,40 +682,6 @@ void CMainFrame::UpdateToolbarBtnSize(CToolBar& toolbar, uint32_t padding_width,
 	toolbar.SetSizes(CSize(btn_size_x + padding_width, btn_size_y + padding_height), CSize(TOOLBAR_ICON_WIDTH, TOOLBAR_ICON_HEIGHT));
 }
 
-bool CMainFrame::LogOut()
-{
-	bool log_out_res = true;
-	std::string response_body;
-	try
-	{
-		response_body = WinHttpGet(URLConfig::Instance().LogoutPath());
-	}
-	catch (std::exception& ex)
-	{
-		LOG_ERROR(L"网络连接有问题，退出系统失败。错误信息： " + gbk_2_wstr(ex.what()));
-		return false;
-	}
-
-	namespace PT = boost::property_tree;
-	try //Parse the configuration file
-	{
-		PT::ptree ptree;
-		std::stringstream ss;
-		ss << response_body;
-		PT::read_json(ss, ptree);
-		std::string res = ptree.get<std::string>(JSON_TAG_CODE);
-		log_out_res = res.compare(JSON_VAL_SUCC) == 0 ? true : false;
-		if (!log_out_res)
-			LOG_ERROR(L"服务器退出处理失败，返回结果为：" + str_2_wstr(ptree.get<std::string>(JSON_TAG_MSG)));
-	}
-	catch (...)
-	{
-		LOG_ERROR(L"解析服务器返回的退出信息时出错！请确认返回数据不为空，返回的数据格式为正确的Json格式！");
-		return false;
-	}
-	return log_out_res;
-}
-
 void CMainFrame::ShowUserMessageDlg()
 {
 	m_user_msg_monitor.Stop(); // Stop monitoring before launching the msg view dialog.
@@ -715,29 +698,16 @@ std::string CMainFrame::MenuUrl(uint32_t menu_res_id) const
 	return url_cfg.FullHost() + m_menu_res_auth_manager.MenuItems().at(menu_res_id).url_path;
 }
 
-std::string CMainFrame::WinHttpGet(const std::string& url_path) const
-{
-	const uint32_t kHTTPOK = 200;
-	auto& url_cfg = URLConfig::Instance();
 
-	WinHttp win_http;
-	win_http.ConnectHost(url_cfg.Host(), url_cfg.Port(), url_cfg.IsHttps());
-	auto& request = win_http.OpenRequest(WinHttp::Method::GET, url_path);
-	if (url_cfg.IsHttps())
-	{
-		auto& app_cfg = ApplicationConfig::Instance();
-		request.SetClientCertificate(app_cfg.ClientCertStore(), app_cfg.ClientCertSubject());
-	}
-	request.SetCookies(Session::Instance().Cookies());
-	request.Send();
-	uint32_t status_code = request.GetResponseStatus();
-	if (kHTTPOK != status_code)
-	{
-		std::string err_msg = "网络请求错误！ 错误码: " + std::to_string(status_code);
-		throw std::exception(err_msg.c_str());
-	}
-	std::string response_body = request.ReadResponseBody();
-	if (response_body.empty())
-		throw std::exception("获取服务器响应数据失败，请确保网络连接正常");
-	return response_body;
+void CMainFrame::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
+{
+	const LONG kMinTrackSizeX = GetSystemMetrics(SM_CXFULLSCREEN)/3*2;
+	const LONG kMaxTrackSizeY = GetSystemMetrics(SM_CYFULLSCREEN)/3*2;
+
+	if (lpMMI->ptMinTrackSize.x <= kMinTrackSizeX)
+		lpMMI->ptMinTrackSize.x = kMinTrackSizeX;
+	if (lpMMI->ptMinTrackSize.y <= kMaxTrackSizeY)
+		lpMMI->ptMinTrackSize.y = kMaxTrackSizeY;
+	
+	CFrameWnd::OnGetMinMaxInfo(lpMMI);
 }

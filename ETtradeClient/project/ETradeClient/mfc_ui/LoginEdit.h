@@ -8,6 +8,8 @@ class CLoginEdit : public CEdit
 {
 public:
 	explicit CLoginEdit(const CString& default_text = L"", bool use_pwd_char = false);
+
+	void SetDefaultText(const CString& default_text);
 	void SetText(const CString& content);
 	CString GetText() const;
 private:

@@ -37,6 +37,24 @@ void CLoginEdit::UpdateStyle()
 	}
 }
 
+void CLoginEdit::SetDefaultText(const CString& default_text)
+{
+	m_color_text = GetSysColor(COLOR_WINDOWTEXT);
+	CString curr_text;
+	GetWindowText(curr_text);
+	if (!curr_text.IsEmpty() && curr_text != m_default_text)
+		return;
+	if (GetSafeHwnd() == ::GetFocus())
+		SetWindowText(L"");
+	else
+	{
+		m_color_text = RGB(120, 120, 120);
+		SetWindowText(default_text);
+	}
+
+	m_default_text = default_text;
+}
+
 void CLoginEdit::SetText(const CString& content)
 {
 	SetWindowText(content);

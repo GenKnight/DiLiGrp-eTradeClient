@@ -37,7 +37,7 @@ class CETradeClientApp : public CWinApp
 public:
 	CETradeClientApp();
 
-// Overrides
+	// Overrides
 	virtual BOOL InitInstance();
 	virtual int ExitInstance();
 	//virtual BOOL PumpMessage();
@@ -47,7 +47,7 @@ public:
 
 private:
 	bool InitializeCef();
-
+	void ReLaunch();
 private:
 	CefRefPtr<BrowserApp>	m_browser_app;
 	bool					m_cef_initialized;

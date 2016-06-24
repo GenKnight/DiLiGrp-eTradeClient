@@ -7,7 +7,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/property_tree/ptree.hpp>
 
-#include "etradeclient/browser/session.h"
+#include "etradeclient/utility/session.h"
 #include "etradeclient/utility/logging.h"
 #include "etradeclient/utility/string_converter.h"
 #include "etradeclient/utility/openssl_aes_cbc.h"
@@ -99,6 +99,17 @@ void MenuResAuthMgr::ReadMenuResAuthCfg()
 
 std::string MenuResAuthMgr::RequestAuthInfo() const
 {
+
+#if 0
+	std::ifstream auth_file("./Config/auth_info.json", std::ios_base::in);
+	if (!auth_file.is_open())
+		LOG_FATAL(L"打开auth_info.json文件失败，请检查！");
+
+	std::string auth_text((std::istreambuf_iterator<char>(auth_file)), std::istreambuf_iterator<char>());
+	auth_file.close();
+	return auth_text;
+#endif
+	
 	std::string auth_url = URLConfig::Instance().MenuAuthPath();
 	const uint32_t kHTTPOK = 200;
 	auto& url_cfg = URLConfig::Instance();

@@ -87,9 +87,6 @@
     <ClInclude Include="ETradeClient\browser\url_request_proxy.h">
       <Filter>Header Files\browser</Filter>
     </ClInclude>
-    <ClInclude Include="ETradeClient\browser\session.h">
-      <Filter>Header Files\browser</Filter>
-    </ClInclude>
     <ClInclude Include="ETradeClient\browser\main_view_browser_handler.h">
       <Filter>Header Files\browser</Filter>
     </ClInclude>
@@ -165,6 +162,15 @@
     <ClInclude Include="ETradeClient\hardware\bank_card_reader.h">
       <Filter>Header Files\hardware</Filter>
     </ClInclude>
+    <ClInclude Include="ETradeClient\browser\error_page.h">
+      <Filter>Header Files\browser</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\utility\logon_mgr.h">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ETradeClient\utility\session.h">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -198,9 +204,6 @@
       <Filter>Source Files\utility</Filter>
     </ClCompile>
     <ClCompile Include="ETradeClient\browser\url_request_proxy.cpp">
-      <Filter>Source Files\browser</Filter>
-    </ClCompile>
-    <ClCompile Include="ETradeClient\browser\session.cpp">
       <Filter>Source Files\browser</Filter>
     </ClCompile>
     <ClCompile Include="ETradeClient\utility\logging.cpp">
@@ -262,6 +265,15 @@
     </ClCompile>
     <ClCompile Include="ETradeClient\hardware\bank_card_reader.cpp">
       <Filter>Source Files\hardware</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\browser\error_page.cpp">
+      <Filter>Source Files\browser</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\utility\logon_mgr.cpp">
+      <Filter>Source Files\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="ETradeClient\utility\session.cpp">
+      <Filter>Source Files\utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -22,6 +22,8 @@ public:
 	bool Launch(); // Lauch the browser window.
 	void UpdateStatus(LPCTSTR status);
 
+	void DoCreatMerchant();
+
 // Overrides
 public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
@@ -65,10 +67,8 @@ private:
 	bool CreateQuickAccessToolBar();
 	bool CreateExFuncToolBar();
 	void UpdateToolbarBtnSize(CToolBar& toolbar, uint32_t padding_width = 0, uint32_t padding_height = 0);
-	bool LogOut();
 	void ShowUserMessageDlg();
 	std::string MenuUrl(uint32_t menu_res_id) const;
-	std::string WinHttpGet(const std::string& url_path) const;
 
 private:
 	CStatusBar 			m_status_bar;
@@ -92,6 +92,8 @@ private:
 	int					m_msg_count;
 	
 	bool 				m_is_view_closing;
+public:
+	afx_msg void OnGetMinMaxInfo(MINMAXINFO* lpMMI);
 };
 
 

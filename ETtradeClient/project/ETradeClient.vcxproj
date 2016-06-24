@@ -105,12 +105,12 @@
     <ClInclude Include="ETradeClient\boost_patch\property_tree\json_parser_write.hpp" />
     <ClInclude Include="ETradeClient\browser\async_js_callback_handler.h" />
     <ClInclude Include="ETradeClient\browser\browser_app.h" />
+    <ClInclude Include="ETradeClient\browser\error_page.h" />
     <ClInclude Include="ETradeClient\browser\main_view_browser_handler.h" />
     <ClInclude Include="ETradeClient\browser\browser_util.h" />
     <ClInclude Include="ETradeClient\browser\embedded_browser.h" />
     <ClInclude Include="ETradeClient\browser\render_delegate.h" />
     <ClInclude Include="ETradeClient\browser\url_request_proxy.h" />
-    <ClInclude Include="ETradeClient\browser\session.h" />
     <ClInclude Include="ETradeClient\browser\url_request_client.h" />
     <ClInclude Include="ETradeClient\browser\url_request.h" />
     <ClInclude Include="ETradeClient\browser\user_msg_monitor.h" />
@@ -130,8 +130,10 @@
     <ClInclude Include="ETradeClient\mfc_ui\ConfigDialog.h" />
     <ClInclude Include="ETradeClient\utility\application_config.h" />
     <ClInclude Include="ETradeClient\utility\logging.h" />
+    <ClInclude Include="ETradeClient\utility\logon_mgr.h" />
     <ClInclude Include="ETradeClient\utility\menu_res_auth_mgr.h" />
     <ClInclude Include="ETradeClient\utility\openssl_aes_cbc.h" />
+    <ClInclude Include="ETradeClient\utility\session.h" />
     <ClInclude Include="ETradeClient\utility\string_converter.h" />
     <ClInclude Include="ETradeClient\utility\url_config.h" />
     <ClInclude Include="ETradeClient\utility\url_regex.h" />
@@ -144,11 +146,11 @@
   <ItemGroup>
     <ClCompile Include="ETradeClient\browser\async_js_callback_handler.cpp" />
     <ClCompile Include="ETradeClient\browser\browser_app.cpp" />
+    <ClCompile Include="ETradeClient\browser\error_page.cpp" />
     <ClCompile Include="ETradeClient\browser\main_view_browser_handler.cpp" />
     <ClCompile Include="ETradeClient\browser\embedded_browser.cpp" />
     <ClCompile Include="ETradeClient\browser\render_delegate.cpp" />
     <ClCompile Include="ETradeClient\browser\url_request_proxy.cpp" />
-    <ClCompile Include="ETradeClient\browser\session.cpp" />
     <ClCompile Include="ETradeClient\browser\url_request.cpp" />
     <ClCompile Include="ETradeClient\browser\url_request_client.cpp" />
     <ClCompile Include="ETradeClient\browser\user_msg_monitor.cpp" />
@@ -168,8 +170,10 @@
     <ClCompile Include="ETradeClient\mfc_ui\ConfigDialog.cpp" />
     <ClCompile Include="ETradeClient\utility\application_config.cpp" />
     <ClCompile Include="ETradeClient\utility\logging.cpp" />
+    <ClCompile Include="ETradeClient\utility\logon_mgr.cpp" />
     <ClCompile Include="ETradeClient\utility\menu_res_auth_mgr.cpp" />
     <ClCompile Include="ETradeClient\utility\openssl_aes_cbc.cpp" />
+    <ClCompile Include="ETradeClient\utility\session.cpp" />
     <ClCompile Include="ETradeClient\utility\string_converter.cpp" />
     <ClCompile Include="ETradeClient\utility\url_config.cpp" />
     <ClCompile Include="ETradeClient\utility\win_http.cpp" />

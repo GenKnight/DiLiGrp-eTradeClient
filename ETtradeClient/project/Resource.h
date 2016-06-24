@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by ETradeClient.rc
+// Microsoft Visual C++ 生成的包含文件。
+// 供 ETradeClient.rc 使用
 //
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
@@ -24,37 +24,43 @@
 #define IDC_COMBO_PROTOCOL              1012
 #define IDC_EDIT_MSG_COUNT_QUERY_INTERVAL 1013
 #define IDC_EDIT_PIN_PAD_LEN            1014
+#define IDC_STATIC_LOGIN_TYPE           1014
 #define IDC_EDIT_PIN_PAD_TIMEOUT        1015
 #define ID_EXIT                         32782
 #define ID_MODIFY_PASSWORD              32801
 #define ID_MODIFY_CONFIG                32807
-#define ID_ISSUE_MASTER_CARD            50000
-#define ID_ISSUE_SLAVE_CARD             50010
-#define ID_ISSUE_ANONYMOUS_CARD         50020
-#define ID_SET_CARD_AUTH                50030
-#define ID_REPORT_CARD_LOSS             50040
-#define ID_RESTORE_CARD_LOSS            50050
-#define ID_CHANGE_CARD                  50060
-#define ID_RETURN_CARD                  50070
-#define ID_MODIFY_CARD_PWD              50080
-#define ID_RESET_CARD_PWD               50090
-#define ID_UNLOCK_CARD                  50100
-#define ID_DL_ORG_WHITE_LIST            50110
-#define ID_MANAGE_BANK_CARD             50120
-#define ID_CASH_RECHARGE                50140
-#define ID_CASH_WITHDRAW                50150
-#define ID_FEE_PAYMENT                  50160
-#define ID_SETTLE_ACCOUNTS_APPLY        50170
-#define ID_CUSTOMER_QUERY               50180
-#define ID_OPER_LOG_QUERY               50190
+
+#define ID_SETTLE_PAY						50000
+#define ID_QUERY_STATEMENTS					50010
+#define ID_QUERY_ORDERS						50020
+#define ID_GOOD_SALEROOM					50030
+
+#define ID_GOOD_STORAGE						51000
+#define ID_DISTRIBUTE_MANAGE_FINANCE		51010
+#define ID_DISTRIBUTE_QUERY					51020
+#define ID_DISTRIBUTE_MANAGE_STORE_MANAGER	51030
+#define ID_ALLOT_MANAGE						51040
+#define ID_BREAKAGE_MANAGE					51050
+
+#define ID_CREDIT_SALE_WHITE_LIST			52000
+#define ID_CREDIT_SALE_PAY					52010
+
+#define ID_SETTLE_MANAGE					53000
+#define ID_STORE_MANAGE						53010
+#define ID_GUARANTEE_MANAGE					53020
+#define ID_ROLE_MANAGE						53030
+#define ID_USER_MANAGE						53040
+
+#define ID_STORAGE_CHECK					54000
+#define ID_CHECK_RECORD						54010
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        325
-#define _APS_NEXT_COMMAND_VALUE         32808
-#define _APS_NEXT_CONTROL_VALUE         1014
+#define _APS_NEXT_COMMAND_VALUE         32831
+#define _APS_NEXT_CONTROL_VALUE         1015
 #define _APS_NEXT_SYMED_VALUE           311
 #endif
 #endif

@@ -41,15 +41,20 @@ private:
 
 private:
 	enum { IDD = IDD_LOGIN };
+	enum LoginType{ USER_NAME, CARD_NO};
 
-	std::wstring		m_title;
+	std::wstring	m_title;
+	LoginType		m_login_type;
 
-	CStatic				m_login_err_msg_text;
-	CLoginEdit			m_account_edit;
-	CLoginEdit			m_pwd_edit;
-	LoginBtn			m_login_btn;
-	CImage				m_bg_img;
+	CStatic			m_login_type_text;
+	CStatic			m_login_err_msg_text;
+	CLoginEdit		m_account_edit;
+	CLoginEdit		m_pwd_edit;
+	LoginBtn		m_login_btn;
+	CImage			m_bg_img;
 
-	CFont				m_btn_font;
-	CFont				m_input_font;
+	CFont			m_btn_font;
+	CFont			m_input_font;
+public:
+	afx_msg void OnStnClickedStaticLoginType();
 };

@@ -23,7 +23,7 @@
     <ROW Property="PIDTemplate" Value="&lt;????-????-????-????&gt;"/>
     <ROW Property="ProductCode" Value="2052:{A766A6ED-476B-40DE-85F6-0E279C5FF6C5} " Type="16"/>
     <ROW Property="ProductLanguage" Value="2052"/>
-    <ROW Property="ProductName" Value="电子交易结算柜员系统"/>
+    <ROW Property="ProductName" Value="地利集团商户服务系统"/>
     <ROW Property="ProductVersion" Value="1.0.0" Type="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
     <ROW Property="UpgradeCode" Value="{9D1988DA-B86A-45D5-A752-84DEEBE2EED1}"/>
@@ -226,7 +226,7 @@
     <ROW File="zhTW.pak" Component_="am.pak" FileName="zh-TW.pak" Attributes="0" SourcePath="..\build\out\Win32\Release\cef\Resources\locales\zh-TW.pak" SelfReg="false" NextFile="d3dcompiler_43.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
-    <ROW BuildKey="Win32_Release" BuildName="Win32_Release" BuildOrder="1" BuildType="0" PackageFolder="InstallFiles\Release" PackageFileName="地利集团电子交易结算柜员系统安装程序" Languages="zh" InstallationType="4" CabsLocation="1" PackageType="1" FilesInsideExe="true" ExeIconPath="..\project\Resource\Install.ico" ExtractionFolder="[AppDataFolder][|Manufacturer]\[|ProductName] [|ProductVersion]\install" ExtUI="true" UseLargeSchema="true" ExeName="地利集团电子交易结算柜员系统安装程序" UACExecutionLevel="2"/>
+    <ROW BuildKey="Win32_Release" BuildName="Win32_Release" BuildOrder="1" BuildType="0" PackageFolder="InstallFiles\Release" PackageFileName="地利集团地利集团商户服务系统安装程序" Languages="zh" InstallationType="4" CabsLocation="1" PackageType="1" FilesInsideExe="true" ExeIconPath="..\project\Resource\Install.ico" ExtractionFolder="[AppDataFolder][|Manufacturer]\[|ProductName] [|ProductVersion]\install" ExtUI="true" UseLargeSchema="true" ExeName="地利集团地利集团商户服务系统安装程序" UACExecutionLevel="2"/>
     <ATTRIBUTE name="CurrentBuild" value="Win32_Release"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
@@ -623,9 +623,9 @@
     <ROW Registry="VersionMinor" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="VersionMinor" Value="#0" Component_="AI_CustomARPName"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
-    <ROW Shortcut="_" Directory_="__Dir" Name="启动电子交易~1|启动电子交易结算柜员系统" Component_="ETradeClient.exe" Target="[#ETradeClient.exe]" Description="地利集团电子交易结算柜员系统" Hotkey="0" Icon_="ETradeClient.exe" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
-    <ROW Shortcut="__1" Directory_="__Dir" Name="卸载电子交易~1|卸载电子交易结算柜员系统" Component_="_" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" Description="卸载电子交易结算柜员系统" Hotkey="0" Icon_="SystemFoldermsiexec.exe" IconIndex="0" ShowCmd="1"/>
-    <ROW Shortcut="__2" Directory_="DesktopFolder" Name="电子交易结算~1|电子交易结算柜员系统" Component_="ETradeClient.exe" Target="[#ETradeClient.exe]" Description="地利集团电子交易结算柜员系统" Hotkey="0" Icon_="ETradeClient.exe" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="_" Directory_="__Dir" Name="启动地利集团~1|启动地利集团商户服务系统" Component_="ETradeClient.exe" Target="[#ETradeClient.exe]" Description="地利集团地利集团商户服务系统" Hotkey="0" Icon_="ETradeClient.exe" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="__1" Directory_="__Dir" Name="卸载地利集团~1|卸载地利集团商户服务系统" Component_="_" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" Description="卸载地利集团商户服务系统" Hotkey="0" Icon_="SystemFoldermsiexec.exe" IconIndex="0" ShowCmd="1"/>
+    <ROW Shortcut="__2" Directory_="DesktopFolder" Name="地利集团结算~1|地利集团商户服务系统" Component_="ETradeClient.exe" Target="[#ETradeClient.exe]" Description="地利集团地利集团商户服务系统" Hotkey="0" Icon_="ETradeClient.exe" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiSignatureComponent">
     <ROW Signature="FileSearchSign" FileName="cmd.exe"/>

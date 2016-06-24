@@ -29,6 +29,7 @@ public:
 	std::string UserMsgCountPath() const;
 	std::string UserMsgPath() const;
 	std::string PwdModificationPath() const;
+	std::string CreateMerchantPath() const;
 private:
 	URLConfig();
 	URLConfig(const URLConfig&);
@@ -45,5 +46,6 @@ private:
 	std::string m_user_msg_count_path;
 	std::string m_user_msg_path;
 	std::string m_modify_pwd_path;
+	std::string m_create_merchant_path;
 };
 #endif // ETRADECLIENT_UTILITY_URL_CONFIG_H_INCLUDED

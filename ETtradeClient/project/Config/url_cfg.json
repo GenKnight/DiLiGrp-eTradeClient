@@ -1,6 +1,6 @@
 {
 	"protocol": "http",
-	"host": "card.esc.diligrp.com",
+	"host": "shop.esc.diligrp.com",
 	"port": 0,
 	"main_path": "/user/clientInitMain.page",
 	"login_path": "/counter/authorizeCounter.auth",
@@ -8,5 +8,6 @@
 	"menu_auth_path":"/counter/loadPermission.do", 
 	"user_msg_count_path":"/message/countUserMessage.do", 
 	"user_msg_path":"/message/userMessageInit.page",
-	"modify_pwd_path":"/employee/client/initModifyPassword.page"
+	"modify_pwd_path":"/portal/account/initModifyPassword",
+	"create_merchant_path":"/portal/merchant/init"
 }

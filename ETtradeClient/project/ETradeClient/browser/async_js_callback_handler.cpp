@@ -13,8 +13,9 @@
 #include "etradeclient/utility/url_config.h"
 #include "etradeclient/utility/logging.h"
 #include "etradeclient/utility/string_converter.h"
+#include "etradeclient/utility/win_msg_define.h"
 
-namespace HW
+namespace
 {
 	namespace PT = boost::property_tree;
 
@@ -25,6 +26,54 @@ namespace HW
 	static const std::string JSON_TAG_SEQ = "seq";
 	static const std::string JSON_TAG_ANS = "answer";
 	static const std::string JSON_TAG_ERROR_CODE = "errorCode";
+
+	struct JSRequest
+	{
+		std::string	cmd;
+		std::string file_id;
+		std::string data;
+		std::string	seq; // The sequence number of the request.
+	};
+
+	JSRequest ParseRequest(const std::string& request_json)
+	{
+		PT::ptree ptree;
+		std::stringstream ss;
+		ss << request_json;
+		PT::read_json(ss, ptree);
+		std::string cmd = ptree.get<std::string>(JSON_TAG_CMD);
+		std::string file_id = ptree.get<std::string>(JSON_TAG_FILEID);
+		std::string data = ptree.get<std::string>(JSON_TAG_DATA);
+		std::string seq = ptree.get<std::string>(JSON_TAG_SEQ);
+		return{ cmd, file_id, data, seq };
+	}
+
+	std::string MakeResultJSON(const std::string& answer,
+		const std::string& file_id,
+		const std::string& error_code,
+		const std::string& seq,
+		const PT::ptree& data = PT::ptree())
+	{
+		PT::ptree root;
+		root.put(JSON_TAG_ANS, answer);
+		root.put(JSON_TAG_FILEID, file_id);
+		root.put_child(JSON_TAG_DATA, data);
+		root.put(JSON_TAG_ERROR_CODE, error_code);
+		root.put(JSON_TAG_SEQ, seq);
+		std::stringstream ss;
+		PT::write_json(ss, root, false);
+		return ss.str();
+	}
+	bool IsEqual(const std::string& str1, const std::string& str2)
+	{
+		return 0 == str1.compare(str2);
+	}
+}
+
+
+namespace HW
+{
+	// Tag & value of the hardware function request & response string in JSON format.
 
 	static const std::string JSON_VAL_CMD_ACTIVATE = "activate";
 	static const std::string JSON_VAL_CMD_RESET = "reset";
@@ -47,43 +96,6 @@ namespace HW
 	static const std::string JSON_VAL_FILEID_PIN_PAD = "11";
 	static const std::string JSON_VAL_FILEID_BANK_CARD_NUM = "20";
 
-	struct HWRequest
-	{
-		std::string	cmd;
-		std::string file_id;
-		std::string data;
-		std::string	seq; // The sequence number of the request.
-	};
-
-	HWRequest ParseRequest(const std::string& request_json)
-	{
-		PT::ptree ptree;
-		std::stringstream ss;
-		ss << request_json;
-		PT::read_json(ss, ptree);
-		std::string cmd = ptree.get<std::string>(JSON_TAG_CMD);
-		std::string file_id = ptree.get<std::string>(JSON_TAG_FILEID);
-		std::string data = ptree.get<std::string>(JSON_TAG_DATA);
-		std::string seq = ptree.get<std::string>(JSON_TAG_SEQ);
-		return { cmd, file_id, data, seq };
-	}
-
-	std::string MakeResultJSON(const std::string& answer,
-		const std::string& file_id,
-		const std::string& error_code,
-		const std::string& seq,
-		const PT::ptree& data)
-	{
-		PT::ptree root;
-		root.put(JSON_TAG_ANS, answer);
-		root.put(JSON_TAG_FILEID, file_id);
-		root.put_child(JSON_TAG_DATA, data);
-		root.put(JSON_TAG_ERROR_CODE, error_code);
-		root.put(JSON_TAG_SEQ, seq);
-		std::stringstream ss;
-		PT::write_json(ss, root, false);
-		return ss.str();
-	}
 
 	class HWRequestHandler
 	{
@@ -105,7 +117,7 @@ namespace HW
 			try
 			{
 				static const std::string OK = ""; // TODO maybe improve this use the same variable defined by "HardwareCmd".
-				HWRequest hw_req = ParseRequest(request_json);
+				JSRequest hw_req = ParseRequest(request_json);
 
 				LOG_TRACE(L"执行硬件调用请求:" + str_2_wstr("[" + hw_req.cmd + "," +hw_req.file_id + "," + hw_req.seq + "]"));
 				HardwareCmd::Reply reply = m_hw_cmd_map.at(hw_req.cmd + hw_req.file_id).Execute(hw_req.data);
@@ -127,8 +139,38 @@ namespace HW
 	private:
 		HardwareCmdMap m_hw_cmd_map;
 	};
+} // HW
 
-	/*Callback handler for call the hardware function.*/
+
+namespace UI{
+	// Tag & value of the hardware function request & response string in JSON format.
+
+	static const std::string JSON_VAL_CMD_CLOSE_WND = "close_wnd";
+
+	static const std::string JSON_VAL_ANS_CLOSE_WND_ACK = "close_wnd_ack";
+	static const std::string JSON_VAL_ANS_CLOSE_WND_FAILED = "close_wnd_failed";
+
+	static const std::string JSON_VAL_FILEID_CREAT_MERCHANT_VIEW = "30";
+
+	static const std::string OK = ""; // 操作成功.
+	static const std::string ERR = "601"; // 操作失败.
+
+	std::string HandleRequest(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, const CefString& request_json)
+	{
+		JSRequest js_rq = ParseRequest(request_json);
+		
+		if (IsEqual(js_rq.cmd, JSON_VAL_CMD_CLOSE_WND)
+			&& IsEqual(js_rq.file_id, JSON_VAL_FILEID_CREAT_MERCHANT_VIEW))
+		{
+			::PostMessage(browser->GetHost()->GetWindowHandle(), WM_CLOSE, NULL, NULL);
+			return MakeResultJSON(JSON_VAL_ANS_CLOSE_WND_ACK, js_rq.file_id, OK, js_rq.seq);
+		}
+
+		return MakeResultJSON(JSON_VAL_ANS_CLOSE_WND_FAILED, js_rq.file_id, ERR, js_rq.seq);
+	}
+}
+
+namespace{
 	class Handler : public CefMessageRouterBrowserSide::Handler
 	{
 	public:
@@ -140,11 +182,13 @@ namespace HW
 			bool persistent,
 			CefRefPtr<Callback> callback) OVERRIDE
 		{
+#ifndef _TEST
 			// Only handle the message from our own host. This is an important security check!
 			CefString url_ = frame->GetURL();
 			if (!CheckHost(url_.ToString()))
 				return false;
-			callback->Success(m_hw_req_handler.HandleRequest(request_json));
+#endif
+			Handing(browser, frame, request_json, callback);
 			return true;
 		}
 	private:
@@ -156,16 +200,58 @@ namespace HW
 			return 0 == URLConfig::Instance().Host().compare(match_res[3].str());
 		}
 	private:
-		HWRequestHandler m_hw_req_handler;
+		virtual void Handing(CefRefPtr<CefBrowser> browser,
+			CefRefPtr<CefFrame> frame,
+			const CefString& request_json,
+			CefRefPtr<Callback> callback) = 0;
 	};
-} // HW
+
+	/*Callback handler for call the hardware function.*/
+	class HWHandle :public Handler
+	{
+	private:
+		void Handing(CefRefPtr<CefBrowser> browser,
+			CefRefPtr<CefFrame> frame,
+			const CefString& request_json,
+			CefRefPtr<Callback> callback)
+		{
+			callback->Success(m_hw_req_handler.HandleRequest(request_json));
+		}
+	private:
+		HW::HWRequestHandler m_hw_req_handler;
+	};
+
+	class UIHandle :public Handler
+	{
+	private:
+		void Handing(CefRefPtr<CefBrowser> browser,
+			CefRefPtr<CefFrame> frame,
+			const CefString& request_json,
+			CefRefPtr<Callback> callback)
+		{
+			callback->Success(UI::HandleRequest(browser, frame, request_json));
+		}
+	private:
+		HW::HWRequestHandler m_hw_req_handler;
+	};
+}
+
+
 
 namespace AsyncJSCallbackHandler
 {
 	// Handler creation. Called from MainViewBrowserHandler.
-	void Create(MainViewBrowserHandler::MessageHandlerSet& handlers)
+	void HW_Create(MainViewBrowserHandler::MessageHandlerSet& handlers)
 	{
 		//TODO: need exception handling here? return true/false indicator?
-		handlers.emplace(new HW::Handler());
+		handlers.emplace(new HWHandle());
 	}
+
+	// Handler creation. Called from PopupBrowserHandler(CreateMerchantView).
+	void UI_Create(PopupBrowserHandler::MessageHandlerSet& handlers)
+	{
+		//TODO: need exception handling here? return true/false indicator?
+		handlers.emplace(new UIHandle());
+	}
+
 } // AsyncJSCallbackHandler

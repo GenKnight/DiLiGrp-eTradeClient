@@ -7,7 +7,7 @@
 #include <boost/property_tree/ptree.hpp>
 
 #include "etradeclient/boost_patch/property_tree/json_parser.hpp" // WARNIING! Make sure to include our patched version.
-#include "etradeclient/browser/session.h"
+#include "etradeclient/utility/session.h"
 #include "etradeclient/browser/url_request_proxy.h"
 #include "etradeclient/utility/logging.h"
 #include "etradeclient/utility/application_config.h"

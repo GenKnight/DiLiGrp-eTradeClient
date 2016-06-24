@@ -40,11 +40,13 @@ public:
 	class Request
 	{
 	public:
+		Request() :m_content_type("Content-Type: application/x-www-form-urlencoded; charset=UTF-8"){};
 		Request(Request&&);
 		Request& operator=(Request&&);
 		~Request();
 		void SetCookies(const Cookies& cookies);
 		void SetClientCertificate(const std::string& cert_store_name, const std::string& subject_name);
+		void SetContentType(std::string content_type);
 		void SetPostData(const std::string& post_data);
 		void Send(); // Send request to server synchronously.
 
@@ -73,6 +75,7 @@ public:
 	private:
 		HINTERNET		m_request;
 		Method			m_method;
+		std::string		m_content_type;
 		std::string		m_post_data;
 
 		friend class WinHttp;
